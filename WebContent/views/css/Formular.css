@@ -1,9 +1,6 @@
 /* Demo styles
 ----------------------------------*/
-body {
-	font-family: "Arial","Verdana","sans-serif";
-	margin: 1em;
-}
+
 #wrapper {
 	width: 20em;
 }
@@ -11,19 +8,12 @@ h1 {
 	font-family:"Trebuchet MS","Helvetica";
 	border-bottom: 1px solid #EEEEEE;
 }
-p {
-	font-size: 0.8em;
-}
 #controls {
 	position: absolute;
-	font-size: 0.6em;
 	top: 0;
 }
 #controls a{
 	color: gray;
-}
-#copyright {
-font-size: 0.6em;
 }
 
 /* Form Styling
@@ -44,7 +34,6 @@ legend {
 }
 label, input {
 	display:block;
-	font-size: 0.8em;
 }
 label {
 	cursor: pointer;
@@ -85,9 +74,6 @@ input.radio {
 .info {
 	margin: 0 0 1em 0;
 	padding: 0.2em 0.5em;
-}
-#ui-formular-error li {
-	font-size: 0.8em;
 }
 
 #ui-formular-error{

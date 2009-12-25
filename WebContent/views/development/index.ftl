@@ -37,7 +37,10 @@
 		});
 		$('#accordion>div').find('A').click(function(){
 			var tablename = $(this).html();
-			$('.window_main').find('#model').load('Development/CreateModel?tableName='+tablename)
+			$('.window_main').find('#model').load('Development/CreateModel?tableName='+tablename).text();
+			$('.window_main').find('#View').load('Development/CreateViews?tableName='+tablename,{},function(){
+				$(this).html($(this).html());
+			});
 			return false;
 		})
 		

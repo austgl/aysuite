@@ -9,16 +9,18 @@
 <meta name="Copyright" content="网站地址,版权说明" />
 <meta name="descrīption" content="网站性质描述" />
 <meta name="keywords"content="关键字列表,用逗号分割" />
-<link rel="icon" href="ico图片文件url" type="image/x-icon" />
-<link rel="shortcut icon" href="ico图片文件url" type="image/x-icon" />
+<link rel="icon" href="${jspath?html}views/icon.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="${jspath?html}views/icon.ico" type="image/x-icon" />
 
-<script type="text/javascript" src="${jspath?html}views/js/jquery.package.js"></script>	
-<script type="text/javascript" src="${jspath?html}views/js/jquery.desktop.js"></script>	
-<script type="text/javascript" src="${jspath?html}views/js/ui.accordion.js"></script>
-<script type="text/javascript" src="${jspath?html}views/js/ui.dialog.js"></script>
+<script type="text/javascript" src="${jspath?html}views/js/jquery-1.3.2.js"></script>	
+<script type="text/javascript" src="${jspath?html}views/js/jquery-ui-1.7.2.js"></script>
+<script type="text/javascript" src="${jspath?html}views/js/jquery.desktop.js"></script>
 <script type="text/javascript" src="${jspath?html}views/js/ui.formValidator_min.js"></script>
 <script type="text/javascript" src="${jspath?html}views/js/jquery.form.js"></script>
 <script type="text/javascript" src="${jspath?html}views/js/jquery.linkbutton.js"></script>
+<script type="text/javascript" src="${jspath?html}views/js/jquery.tree.js"></script>
+<script type="text/javascript" src="${jspath?html}views/js/jquery.jgrowl.js"></script>
+<script type="text/javascript" src="${jspath?html}views/js/ui.ariaSorTable.js"></script>
 
 <link rel="stylesheet" type="text/css" href="${jspath?html}views/css/desktop.css">
 <link rel="stylesheet" type="text/css" href="${jspath?html}views/css/html.css">
@@ -26,6 +28,9 @@
 <link rel="stylesheet" type="text/css" href="${jspath?html}views/css/Formular.css">
 <link rel="stylesheet" type="text/css" href="${jspath?html}views/css/linkbutton.css">
 <link rel="stylesheet" type="text/css" href="${jspath?html}views/css/linkbuttonicon.css">
+<link rel="stylesheet" type="text/css" href="${jspath?html}views/css/tree.css">
+<link rel="stylesheet" type="text/css" href="${jspath?html}views/css/icon.css">
+<link rel="stylesheet" type="text/css" href="${jspath?html}views/css/jquery.jgrowl.css">
 <!--[if gte IE 7]>
 <link rel="stylesheet" type="text/css" href="${jspath?html}views/css/ie.css">
 <![endif]-->
@@ -46,11 +51,11 @@
 		Development
 	</a>	
 	
-	<div id="window_computer" class="abs window">
+	<div id="window_computer" class="abs window" style='position: absolute;'>	
 		<div class="abs window_inner">
-			<div class="window_top">
+			<div class="window_top ui-widget-header">
 				<span class="float_left">
-					<img src="assets/images/icons/icon_16_computer.png" />
+					<img src="views/images/icons/icon_16_computer.png" />
 					<div id="title">Computer</div>
 				</span>
 				<span class="float_right">
@@ -108,8 +113,8 @@
 					</table>
 				</div>
 			</div>
-			<div class="abs window_bottom">
-				Build: AY2009-12-12
+			<div class="abs window_bottom ui-state-active">
+				Build: AY2009-12-19
 			</div>
 		</div>
 		<span class="abs ui-resizable-handle ui-resizable-se"></span>
@@ -121,26 +126,27 @@
 <div class="abs" id="bar_top">
 	<span class="float_right" id="clock"></span>
 	<ul>
-	<#list myModule as item>
-		<#if item.m_ParentID==0>
-		<li>
-			<a class="menu_trigger" href="#">${item.m_CName}</a>
-			<ul class="menu">
-			<#list myModule as subitem>
-				<#if item.moduleID==subitem.m_ParentID>
-					<li>
-						<a class="submenu" href="${item.m_Directory}/${subitem.m_Directory}" PageCode="${subitem.m_PageCode}" id="${subitem.moduleID}" Icon="${subitem.m_Icon}" Directory="${subitem.m_Directory}" >${subitem.m_CName}</a>
-					</li>				
-				</#if>
-			</#list>
-			</ul>
-		</li>
-		</#if>		
-	</#list>
-		<li><div id="switcher"></div></li>
+		<#list myModule as item>
+			<#if item.m_ParentID==0>
+			<li id="modulemenu">
+				<a class="menu_trigger" href="#">${item.m_CName}</a>
+				<ul class="menu">
+				<#list myModule as subitem>
+					<#if item.moduleID==subitem.m_ParentID>
+						<li>
+							<a class="submenu" href="${item.m_Directory}/${subitem.m_Directory}" PageCode="${subitem.m_PageCode}" id="${subitem.moduleID}" Icon="${subitem.m_Icon}" Directory="${subitem.m_Directory}" >${subitem.m_CName}</a>
+						</li>				
+					</#if>
+				</#list>
+				</ul>
+			</li>
+			</#if>		
+		</#list>
+		<li><div id="switcher"></div>${MyUserTicket.u_CName}{${MyUserTicket.u_LoginName}}</li>
+		<li><a href="Permission/UserLogout">注销</a></li>
 	</ul>
 </div>
-<div class="abs" id="bar_bottom">
+<div id="bar_bottom" class="abs ui-state-default ui-corner-all">
 	<a class="float_left" href="#" id="show_desktop" title="Show Desktop">
 		<img src="views/images/icons/icon_22_desktop.png" />
 	</a>
@@ -159,11 +165,19 @@
 <div id="Deldialog" title="警告">
 	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>此操作将不可恢复，你确定删除本条数据吗？</p>
 </div>
-<script type="text/javascript" src="http://jqueryui.com/themeroller/themeswitchertool/"></script>	
+<!----
+<script type="text/javascript" src="http://jqueryui.com/themeroller/themeswitchertool/"></script>
+--->	
 <script>
 JQD.init_desktop();
 $(function() {		
-	$('#switcher').themeswitcher();
+	//$('#switcher').themeswitcher();
+	$('ul>#modulemenu').each(function(){
+		//alert($(this).children().find('a').html());
+		if ($(this).children().find('a').html()==null)
+			//alert($(this).html());
+			$(this).empty();
+	})
 });		
 </script>
 	

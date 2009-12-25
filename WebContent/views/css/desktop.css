@@ -8,6 +8,7 @@
 html,
 body {
 	overflow: hidden;
+	font-size:12px;
 }
 
 body {
@@ -184,7 +185,6 @@ div.ui-resizable-handle {
 }
 
 .window_bottom {
-	background: #fff url(../images/gui/bar_top.png) repeat-x left bottom;
 	border-top: 1px solid #bbb;
 	border-bottom-left-radius: 5px;
 	border-bottom-right-radius: 5px;
@@ -325,7 +325,7 @@ table.data td.zebra {
 }
 
 table.data tr.active td {
-	background: #06c url(../images/gui/bar_top_link.png) repeat-x;
+	
 	color: #fff;
 }
 
@@ -356,7 +356,7 @@ th.shrink {
 }
 
 #bar_bottom {
-	background: #333 url(../images/gui/bar_bottom.png) repeat-x;
+	
 	border-top: 1px solid #fff;
 	color: #fff;
 	font-size: 13px;

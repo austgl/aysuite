@@ -1,10 +1,8 @@
 //
 // Namespace - Module Pattern.
 //
-var JQD = (function($) {
-	
 	function InitPageParms(ts){
-		$("A#Delete[action='Delete']").click(function(){
+		$("A[action='Delete']").click(function(){
 			var s = $(this);
 			var getUrl = $(this).attr('href');
 	      $("#Deldialog").clone().dialog({
@@ -19,9 +17,9 @@ var JQD = (function($) {
 	        buttons: {
 	          '确定': function() {
 	            //$(this).dialog('close');
-	        	s.remove();
 	        	$.get(getUrl); 
 	            $(this).remove();
+				s.remove();
 	          },
 	          '取消': function() {
 	            //$(this).dialog('close');
@@ -32,8 +30,7 @@ var JQD = (function($) {
 	      return false;
 		});	
 	}
-	
-	
+var JQD = (function($) {
 	return {
 		//
 		// Initialize the clock.
@@ -112,7 +109,7 @@ var JQD = (function($) {
 		// Clear active states, hide menus.
 		//
 		clear_active: function() {
-			$('a.active, tr.active').removeClass('active');
+			$('a.active, tr.active').removeClass('active ui-state-default');
 			$('ul.menu').hide();
 		},
 
@@ -254,6 +251,7 @@ var JQD = (function($) {
 				// Maximize or restore the window.
 				y.find('a.window_resize').click(function() {
 					JQD.window_resize(this);
+					return false;
 				});
 
 				y.mousedown(function() {
@@ -366,11 +364,13 @@ var JQD = (function($) {
 			// Minimize the window.
 			$('a.window_min').click(function() {
 				$(this).closest('div.window').hide();
+				return false;
 			});
 
 			// Maximize or restore the window.
 			$('a.window_resize').click(function() {
 				JQD.window_resize(this);
+				return false;
 			});
 
 			// Close the window.
@@ -401,7 +401,7 @@ var JQD = (function($) {
 				$(this).find('tr:even td').addClass('zebra');
 			}).find('tr').live('click', function() {
 				// Highlight row, ala Mac OS X.
-				$(this).closest('tr').addClass('active');
+				$(this).closest('tr').addClass('active ui-state-default ui-corner-tr');
 			});
 
 			/*----------------顶部导航按钮按下创建的新菜单---------------------			*/
@@ -440,10 +440,11 @@ var JQD = (function($) {
 				if (x.is(':hidden')) {
 					x.remove().appendTo('#dock').end().show('fast').find('#title').html(atitle);
 				}
-				//--------------新创建的窗体事件
-
+				//--------------新窗体的事件
+				
 				y.find('a.window_min').click(function() {
 					$(this).closest('div.window').hide();
+					return false;
 				});
 
 				// Maximize or restore the window.
