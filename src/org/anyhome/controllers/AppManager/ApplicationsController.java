@@ -8,15 +8,10 @@
  
 package org.anyhome.controllers.AppManager;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 import org.anyhome.AMF3View;
 import org.anyhome.controllers.ApplicationController;
 import org.anyhome.models.MyApplications;
-import org.anyhome.models.MyModule;
 import org.anyhome.models.MyUser;
 
 import com.et.ar.exception.ActiveRecordException;
@@ -24,6 +19,7 @@ import com.et.mvc.FreeMarkerView;
 
 
 public class ApplicationsController extends ApplicationController {
+	
 	/*
 	public AMF3View index() throws Exception{
 		List<MyApplications> myApp = MyApplications.findAll(MyApplications.class);
@@ -35,34 +31,56 @@ public class ApplicationsController extends ApplicationController {
 		return new AMF3View(lst);
 	}
 	*/
+	/**
+	 * 
+	 */
+	protected Boolean CheckAdmin() {
+		MyUserTicket = (MyUser)session.getAttribute("MyUserTicket");
+		if (MyUserTicket.getU_Type()==0){
+			return true;
+		}else{
+			return false;
+		}
+	}
 	public FreeMarkerView index() throws ActiveRecordException{
 		FreeMarkerView view = new FreeMarkerView();		
 		List<MyApplications> myApp = MyApplications.findAll(MyApplications.class);
 		view.setAttribute("myApp", myApp);
 		return view;	
 	}
-	public void Edit(int id){
-		
+	public FreeMarkerView Edit(int id){
+		return new FreeMarkerView();
 	}
 	
-	public void SaveEdit(MyApplications myApp){
-		
+	public FreeMarkerView SaveEdit(int id) throws Exception{
+		MyApplications myApp = MyApplications.find(MyApplications.class, id);
+		myApp = MyApplications.updateModel(myApp, request.getParameterMap());
+		if (myApp.save()){
+			return null;
+		}
+		return new FreeMarkerView();
 	}
 	
-	public void Create(){
-		
+	public FreeMarkerView Create(){
+		return new FreeMarkerView();
 	}
 	
-	public void SaveCreate(){
-		
+	public FreeMarkerView SaveCreate(MyApplications myApp) throws Exception{
+		 if (myApp.save()){
+	            return null;
+	        }
+		 return new FreeMarkerView();
+		//return myApp.getA_AppName();
 	}
 	
 	public void Details(int id){
 		
 	}
 	
-	public void Delete(int Id){
-		
+	public FreeMarkerView Delete(int id) throws ActiveRecordException{
+		MyApplications myApp = MyApplications.find(MyApplications.class, id);
+		myApp.destroy();	
+		return new FreeMarkerView();
 	}
 	
 	public AMF3View test() throws ActiveRecordException{

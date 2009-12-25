@@ -24,11 +24,11 @@ import com.et.ar.annotations.Table;
 public class MyGroup extends ActiveRecordBase {
 	@Id private Integer GroupID;
 	@Column private String G_CName;
-	@Column private String G_ParentID;
-	@Column private String G_ShowOrder;
-	@Column private String G_Level;
-	@Column private String G_ChildCount;
-	@Column private String G_Delete;
+	@Column private Integer G_ParentID;
+	@Column private Integer G_ShowOrder;
+	@Column private Integer G_Level;
+	@Column private Integer G_ChildCount;
+	@Column private Integer G_Delete;
 	public Integer getGroupID() {
 		return GroupID;
 	}
@@ -38,34 +38,34 @@ public class MyGroup extends ActiveRecordBase {
 	public String getG_CName() {
 		return G_CName;
 	}
-	public void setG_ParentID(String g_ParentID) {
+	public void setG_ParentID(Integer g_ParentID) {
 		G_ParentID = g_ParentID;
 	}
-	public String getG_ParentID() {
+	public Integer getG_ParentID() {
 		return G_ParentID;
 	}
-	public void setG_ShowOrder(String g_ShowOrder) {
+	public void setG_ShowOrder(Integer g_ShowOrder) {
 		G_ShowOrder = g_ShowOrder;
 	}
-	public String getG_ShowOrder() {
+	public Integer getG_ShowOrder() {
 		return G_ShowOrder;
 	}
-	public void setG_Level(String g_Level) {
+	public void setG_Level(Integer g_Level) {
 		G_Level = g_Level;
 	}
-	public String getG_Level() {
+	public Integer getG_Level() {
 		return G_Level;
 	}
-	public void setG_ChildCount(String g_ChildCount) {
+	public void setG_ChildCount(Integer g_ChildCount) {
 		G_ChildCount = g_ChildCount;
 	}
-	public String getG_ChildCount() {
+	public Integer getG_ChildCount() {
 		return G_ChildCount;
 	}
-	public void setG_Delete(String g_Delete) {
+	public void setG_Delete(Integer g_Delete) {
 		G_Delete = g_Delete;
 	}
-	public String getG_Delete() {
+	public Integer getG_Delete() {
 		return G_Delete;
 	}
 }

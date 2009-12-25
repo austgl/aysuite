@@ -20,7 +20,9 @@ import org.anyhome.controllers.ApplicationController;
 import org.anyhome.models.MyModule;
 
 import com.et.ar.exception.ActiveRecordException;
+import com.et.mvc.FreeMarkerView;
 import com.et.mvc.JsonView;
+import com.et.mvc.TextView;
 
 /**
  * @author Ayhome
@@ -28,10 +30,63 @@ import com.et.mvc.JsonView;
  */
 public class ModuleController extends ApplicationController {
 
-	public void index(){
-		
+	public FreeMarkerView index() throws ActiveRecordException{
+		FreeMarkerView view = new FreeMarkerView();
+		List<MyModule> myModule = MyModule.findAll(MyModule.class);	
+		view.setAttribute("myModule", myModule);
+		return view;
 	}
 	
+	public FreeMarkerView Create(){
+		FreeMarkerView view = new FreeMarkerView();
+
+		return view;
+	}
+
+
+	public JsonView SaveCreate(MyModule myModule) throws ActiveRecordException{
+		if(myModule.save())
+			return null;
+		//return ;
+		return new JsonView();
+		
+	}	
+	public FreeMarkerView Edit(){
+		FreeMarkerView view = new FreeMarkerView();
+
+		return view;
+	}
+
+	
+	public TextView SaveEdit(int id) throws Exception{
+		MyModule myModule = MyModule.find(MyModule.class, id);
+		myModule = MyModule.updateModel(myModule, request.getParameterMap());
+		if(myModule.save())
+			return null;
+		return new TextView();
+	}
+	
+	
+	public FreeMarkerView CreateModule(){
+		FreeMarkerView view = new FreeMarkerView();
+
+		return view;
+	}
+	
+	public FreeMarkerView EditModule(){
+		FreeMarkerView view = new FreeMarkerView();
+
+		return view;
+	}
+	
+	public FreeMarkerView ModuleList(int id) throws ActiveRecordException{
+		FreeMarkerView view = new FreeMarkerView();
+		MyModule myModule = MyModule.findFirst(MyModule.class,"ModuleID=?",
+				new Object[]{id});
+		view.setAttribute("myModule", myModule);
+		return view;
+	}
+
 	public JsonView GetAllJson() throws ActiveRecordException{
 		List<MyModule> myModule = MyModule.findAll(MyModule.class);
 		return new JsonView(myModule);
@@ -47,16 +102,9 @@ public class ModuleController extends ApplicationController {
 		}
 		return new AMF3View(lst);
 	}
-	
-	public void SaveEdit(MyModule myModule){
-		
-	}
-	
-	public void SaveCreate(MyModule myModule){
-		
-	}
-	
-	public void Delete(int id){
-		
+	public TextView Delete(int id) throws ActiveRecordException{
+		MyModule myModule =MyModule.find(MyModule.class, id);
+		myModule.destroy();
+		return new TextView();
 	}	
 }

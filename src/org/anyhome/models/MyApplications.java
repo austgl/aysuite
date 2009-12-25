@@ -11,12 +11,14 @@ package org.anyhome.models;
 import com.et.ar.ActiveRecordBase;
 import com.et.ar.annotations.Column;
 import com.et.ar.annotations.Id;
+import com.et.ar.annotations.NotEmpty;
 import com.et.ar.annotations.Table;
 
 @Table(name="Ay_Applications")
 public class MyApplications extends ActiveRecordBase {
 	@Id private Integer ApplicationID;
-	@Column private String A_AppName;
+	@NotEmpty(message="应用名称必须填写")
+	@Column private String A_AppName;	
 	@Column private String A_AppDescription;
 	@Column private String A_AppUrl;
 	/**

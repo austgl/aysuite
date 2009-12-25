@@ -106,8 +106,8 @@ public class DevelopmentController extends ApplicationController {
 	    	MyDevelopment myd = new MyDevelopment();
 		    myd.setDatabaseType("sql server");
 		    myd.setTablename(table);
-		    myd.setColumnType(rsmd.getColumnTypeName(i).trim().toLowerCase());
-		    myd.setColumName(rsmd.getColumnName(i).trim().toLowerCase());
+		    myd.setColumnType(rsmd.getColumnTypeName(i).trim());
+		    myd.setColumName(rsmd.getColumnName(i).trim());
 		    myDevelopment.add(myd);        	
 	    }
 	            

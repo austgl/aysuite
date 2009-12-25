@@ -11,11 +11,27 @@ package org.anyhome.controllers;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.et.mvc.Controller;
+import org.anyhome.models.MyHelpers;
 
-public class ApplicationController extends Controller {	
-	
-	public Map PojoToMap(Object obj) {
+import com.et.mvc.Controller;
+import com.et.mvc.filter.AroundFilter;
+import com.et.mvc.filter.BeforeFilter;
+
+@AroundFilter(execute=org.anyhome.AroundFilter.class)
+public class ApplicationController extends BaseController {		
+
+	protected static Map<String, Integer> PopedomType(){
+		Map<String, Integer> popedomType = new HashMap<String, Integer>();
+		popedomType.put("Details", 2);		
+		popedomType.put("Create", 4);
+		popedomType.put("Edit", 8);
+		popedomType.put("Delete", 16);
+		popedomType.put("Orderby", 32);
+		popedomType.put("Print", 64);
+		popedomType.put("List", 128);
+		return popedomType;		
+	}
+	protected Map PojoToMap(Object obj) {
 		  Map hashMap = new HashMap();
 		  try {
 		   Class c = obj.getClass();

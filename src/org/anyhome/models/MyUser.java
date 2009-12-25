@@ -22,7 +22,7 @@ public class MyUser extends ActiveRecordBase {
 	@Column private String U_EName;
 	@Column private Integer U_GroupID;
 	@Column private String U_Email;
-	@Column private String U_Type;
+	@Column private Integer U_Type;
 	@Column private String U_Status;
 	@Column private String U_Licence;
 	@Column private String U_Mac;
@@ -108,10 +108,10 @@ public class MyUser extends ActiveRecordBase {
 	public String getU_Email() {
 		return U_Email;
 	}
-	public void setU_Type(String u_Type) {
+	public void setU_Type(Integer u_Type) {
 		U_Type = u_Type;
 	}
-	public String getU_Type() {
+	public Integer getU_Type() {
 		return U_Type;
 	}
 	public void setU_Status(String u_Status) {

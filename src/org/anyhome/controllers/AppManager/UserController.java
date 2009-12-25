@@ -17,11 +17,12 @@ public class UserController extends ApplicationController {
 
 	public void index(){
 		
-	}
+	}	
 	
-	public void SaveEdit(){
+	public void SaveEdit(int id){
 		
 	}
+	
 	
 	public void SaveCreate(){
 		
