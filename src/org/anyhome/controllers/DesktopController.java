@@ -15,9 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.anyhome.models.MyModule;
-import org.anyhome.models.MyRolePermission;
-import org.anyhome.models.MyUser;
-import org.anyhome.models.MyUserRoles;
 
 import com.et.ar.exception.ActiveRecordException;
 import com.et.mvc.FreeMarkerView;
@@ -34,7 +31,7 @@ public class DesktopController extends BaseController {
 			myModule = MyModule.findAll(MyModule.class,"M_Close=0",
 					new Object[]{});			
 		}else{
-			myModule = MyModule.findAll(MyModule.class,"(M_Close=0 and M_ParentID=0) or M_PageCode in"+
+			myModule = MyModule.findAll(MyModule.class,"(M_Close=0 and M_ParentID=0 and M_IsSystem=1) or M_PageCode in"+
 					"(select p_pagecode from Ay_RolePermission A,Ay_UserRoles B where r_userid=? "+
 					"and A.P_RoleID = B.R_RoleID)",
 					new Object[]{MyUserTicket.getUserID()});

@@ -30,7 +30,7 @@ import com.et.mvc.JspView;
  * @author Ayhome
  *
  */
-public class SqlserverController extends ApplicationController {
+public class SqlserverController extends AdminController {
 	
 	public JspView CreateAR() throws SQLException, DataAccessException{	
 		String table = request.getParameter("tableName");

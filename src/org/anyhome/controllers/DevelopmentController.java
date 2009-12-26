@@ -30,7 +30,7 @@ import com.et.mvc.FreeMarkerView;
  * @author Ayhome
  *
  */
-public class DevelopmentController extends ApplicationController {
+public class DevelopmentController extends AdminController {
 
 	public FreeMarkerView index() throws DataAccessException, SQLException{
 		FreeMarkerView view = new FreeMarkerView();

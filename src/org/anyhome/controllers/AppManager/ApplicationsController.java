@@ -10,7 +10,7 @@ package org.anyhome.controllers.AppManager;
 
 import java.util.List;
 import org.anyhome.AMF3View;
-import org.anyhome.controllers.ApplicationController;
+import org.anyhome.controllers.AdminController;
 import org.anyhome.models.MyApplications;
 import org.anyhome.models.MyUser;
 
@@ -18,7 +18,7 @@ import com.et.ar.exception.ActiveRecordException;
 import com.et.mvc.FreeMarkerView;
 
 
-public class ApplicationsController extends ApplicationController {
+public class ApplicationsController extends AdminController {
 	
 	/*
 	public AMF3View index() throws Exception{
@@ -31,17 +31,6 @@ public class ApplicationsController extends ApplicationController {
 		return new AMF3View(lst);
 	}
 	*/
-	/**
-	 * 
-	 */
-	protected Boolean CheckAdmin() {
-		MyUserTicket = (MyUser)session.getAttribute("MyUserTicket");
-		if (MyUserTicket.getU_Type()==0){
-			return true;
-		}else{
-			return false;
-		}
-	}
 	public FreeMarkerView index() throws ActiveRecordException{
 		FreeMarkerView view = new FreeMarkerView();		
 		List<MyApplications> myApp = MyApplications.findAll(MyApplications.class);

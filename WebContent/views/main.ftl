@@ -14,6 +14,7 @@
 
 <script type="text/javascript" src="${jspath?html}views/js/jquery-1.3.2.js"></script>	
 <script type="text/javascript" src="${jspath?html}views/js/jquery-ui-1.7.2.js"></script>
+<script type="text/javascript" src="${jspath?html}views/js/jquery.bgiframe.js"></script>
 <script type="text/javascript" src="${jspath?html}views/js/jquery.desktop.js"></script>
 <script type="text/javascript" src="${jspath?html}views/js/ui.formValidator_min.js"></script>
 <script type="text/javascript" src="${jspath?html}views/js/jquery.form.js"></script>
@@ -21,6 +22,7 @@
 <script type="text/javascript" src="${jspath?html}views/js/jquery.tree.js"></script>
 <script type="text/javascript" src="${jspath?html}views/js/jquery.jgrowl.js"></script>
 <script type="text/javascript" src="${jspath?html}views/js/ui.ariaSorTable.js"></script>
+
 
 <link rel="stylesheet" type="text/css" href="${jspath?html}views/css/desktop.css">
 <link rel="stylesheet" type="text/css" href="${jspath?html}views/css/html.css">
@@ -42,6 +44,7 @@
 </head>
 
 <div class="abs" id="desktop">
+<#if MyUserTicket.u_Type==0>
 	<a class="abs icon" style="left:20px;top:20px;" href="#icon_dock_computer" title="MyComputer">
 		<img src="views/images/icons/icon_32_computer.png" />
 		Computer
@@ -50,7 +53,7 @@
 		<img src="views/images/icons/icon_32_drive.png" />
 		Development
 	</a>	
-	
+</#if>	
 	<div id="window_computer" class="abs window" style='position: absolute;'>	
 		<div class="abs window_inner">
 			<div class="window_top ui-widget-header">
@@ -114,7 +117,7 @@
 				</div>
 			</div>
 			<div class="abs window_bottom ui-state-active">
-				Build: AY2009-12-19
+				Build: AY2009-12-26
 			</div>
 		</div>
 		<span class="abs ui-resizable-handle ui-resizable-se"></span>
@@ -126,9 +129,17 @@
 <div class="abs" id="bar_top">
 	<span class="float_right" id="clock"></span>
 	<ul>
+		<li id="modulemenu">
+			<li id="modulemenu2"><a class="menu_trigger" href="#">开始</a>
+				<ul class="menu">
+					<li><a href="Permission/UserLogout">注销</a></li>
+					<li><a href="#">${MyUserTicket.u_CName}{${MyUserTicket.u_LoginName}}</a></li>					
+				</ul>
+			</li>
+		</li>
 		<#list myModule as item>
 			<#if item.m_ParentID==0>
-			<li id="modulemenu">
+			<li id="modulemenu">				
 				<a class="menu_trigger" href="#">${item.m_CName}</a>
 				<ul class="menu">
 				<#list myModule as subitem>
@@ -142,8 +153,7 @@
 			</li>
 			</#if>		
 		</#list>
-		<li><div id="switcher"></div>${MyUserTicket.u_CName}{${MyUserTicket.u_LoginName}}</li>
-		<li><a href="Permission/UserLogout">注销</a></li>
+		<li><div id="switcher"></div></li>
 	</ul>
 </div>
 <div id="bar_bottom" class="abs ui-state-default ui-corner-all">

@@ -11,15 +11,14 @@ package org.anyhome.controllers;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.anyhome.models.MyHelpers;
-
-import com.et.mvc.Controller;
 import com.et.mvc.filter.AroundFilter;
 import com.et.mvc.filter.BeforeFilter;
+import com.et.mvc.filter.BeforeFilters;
 
-@AroundFilter(execute=org.anyhome.AroundFilter.class)
-public class ApplicationController extends BaseController {		
-
+@BeforeFilters({
+	@BeforeFilter(execute="CheckAdmin")
+})
+public class AdminController extends BaseController {			
 	protected static Map<String, Integer> PopedomType(){
 		Map<String, Integer> popedomType = new HashMap<String, Integer>();
 		popedomType.put("Details", 2);		
@@ -31,6 +30,17 @@ public class ApplicationController extends BaseController {
 		popedomType.put("List", 128);
 		return popedomType;		
 	}
+	
+	protected Boolean CheckAdmin() throws Exception{
+		if (MyUserTicket == null){
+			super.Auth();
+        }
+		if(MyUserTicket.getU_Type()==0)
+			return true;
+		else
+			return false;         
+		
+	}	
 	protected Map PojoToMap(Object obj) {
 		  Map hashMap = new HashMap();
 		  try {

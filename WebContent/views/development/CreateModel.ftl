@@ -28,7 +28,7 @@ public class ${tables} extends ActiveRecordBase {
 				<#assign t="String" />
 			</#if>
 			
-			@+${sid} private ${t} ${s}
+			@${sid} private ${t} ${s};
 		</#list>		
 		
 		<#list myDevelopment as item>
@@ -48,7 +48,7 @@ public class ${tables} extends ActiveRecordBase {
 				${s}=T_${s};
 			}
 			public ${t} get${s}() {
-				return ${s}
+				return ${s};
 			} 
 		</#list>					
 }

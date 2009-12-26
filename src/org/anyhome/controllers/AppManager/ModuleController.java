@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.anyhome.AMF3View;
-import org.anyhome.controllers.ApplicationController;
+import org.anyhome.controllers.AdminController;
 import org.anyhome.models.MyModule;
 
 import com.et.ar.exception.ActiveRecordException;
@@ -28,7 +28,7 @@ import com.et.mvc.TextView;
  * @author Ayhome
  *
  */
-public class ModuleController extends ApplicationController {
+public class ModuleController extends AdminController {
 
 	public FreeMarkerView index() throws ActiveRecordException{
 		FreeMarkerView view = new FreeMarkerView();
