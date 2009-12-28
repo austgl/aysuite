@@ -14,6 +14,7 @@ package org.anyhome.controllers.AppManager;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.anyhome.Permission;
 import org.anyhome.controllers.AdminController;
 import org.anyhome.models.MyApplications;
 import org.anyhome.models.MyModule;
@@ -108,7 +109,10 @@ public class RolesController extends AdminController {
 			MyUserRoles myUserRoles = new MyUserRoles();
 			myUserRoles.setR_UserID(Integer.parseInt(i));
 			myUserRoles.setR_RoleID(id);
-			myUserRoles.save();			
+			if (myUserRoles.save()){		
+				String key = i.toString() + "-Roles";
+				Permission.cache.remove(key);
+			}
 		}		
 		return new JsonView();
 	}
@@ -118,7 +122,10 @@ public class RolesController extends AdminController {
 		MyUserRoles myUserRoles = new MyUserRoles ();
 		myUserRoles.setR_RoleID(id);
 		myUserRoles.setR_UserID(userId);
-		myUserRoles.save();
+		if(myUserRoles.save()){
+			String key = userId + "-Roles";
+			Permission.cache.remove(key);
+		}
 		return new JsonView();
 	}
 	public JsonView DeleteRolesUser(int id) throws Exception{
@@ -142,10 +149,10 @@ public class RolesController extends AdminController {
 		view.setAttribute("RoleID", id);
 		
 		List<MyPermissionValue> myPermissionValue = new ArrayList<MyPermissionValue>();		
-		for (String s:PopedomType().keySet()){
+		for (String s:Permission.PopedomType().keySet()){
 			MyPermissionValue PermissionValue = new MyPermissionValue();
 			PermissionValue.setPermissName(s);
-			PermissionValue.setPermissValue(PopedomType().get(s));
+			PermissionValue.setPermissValue(Permission.PopedomType().get(s));
 			myPermissionValue.add(PermissionValue);
 		}		
 		view.setAttribute("myPermission", myPermissionValue);
@@ -159,19 +166,19 @@ public class RolesController extends AdminController {
 				"P_RoleID=? and P_PageCode=?",new Object[]{id,pageCode});
 		if (RolePermisson != null){
 			int PermissValue = RolePermisson.getP_Value();
-			for (String s:PopedomType().keySet()){
-				if ((PermissValue & PopedomType().get(s) )==PopedomType().get(s)){
+			for (String s:Permission.PopedomType().keySet()){
+				if ((PermissValue & Permission.PopedomType().get(s) )==Permission.PopedomType().get(s)){
 					MyPermissionValue PermissionValue = new MyPermissionValue();
 					PermissionValue.setPermissName(s);
-					PermissionValue.setPermissValue(PopedomType().get(s));
+					PermissionValue.setPermissValue(Permission.PopedomType().get(s));
 					myPermissValue.add(PermissionValue);					
 				}				
 			}			
-		}			
+		}
 		return new JsonView(myPermissValue);		
 	}
 	
-	public JsonView UpdateRolePermisson(int id) throws ActiveRecordException{
+	public JsonView UpdateRolePermisson(int id) throws ActiveRecordException{		
 		String pageCode = request.getParameter("pageCode");
 		int p_Value = Integer.parseInt(request.getParameter("p_Value"));
 		int ApplicationID  = Integer.parseInt(request.getParameter("ApplicationID"));
@@ -182,11 +189,13 @@ public class RolesController extends AdminController {
 		RP.setP_PageCode(pageCode);
 		RP.setP_RoleID(id);
 		RP.setP_Value(p_Value);
-		if (RolePermisson!=null)
+		if (RolePermisson!=null){
 			RolePermisson.destroy();
-		if (p_Value<0)
-			return null;
-		RP.save();
+			String key = ApplicationID+ "-"+pageCode;
+			Permission.cache.remove(key);
+		}
+		if (p_Value>0)
+			RP.save();
 		return new JsonView();
 	}
 	

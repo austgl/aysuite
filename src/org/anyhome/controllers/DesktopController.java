@@ -15,15 +15,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.anyhome.models.MyModule;
+import org.anyhome.models.MyUser;
 
 import com.et.ar.exception.ActiveRecordException;
+import com.et.mvc.Controller;
 import com.et.mvc.FreeMarkerView;
+import com.et.mvc.filter.BeforeFilter;
 
 /**
  * @author anyhome
  *
  */
-public class DesktopController extends BaseController {
+@BeforeFilter(execute="Auth")
+public class DesktopController extends Controller {
+	protected MyUser MyUserTicket;
 	public FreeMarkerView index() throws ActiveRecordException{
 		FreeMarkerView view = new FreeMarkerView();		
 		List<MyModule> myModule = new ArrayList<MyModule>();
@@ -39,4 +44,13 @@ public class DesktopController extends BaseController {
 		view.setAttribute("myModule", myModule);		
 		return view;
 	}
+	protected Boolean Auth() throws Exception{
+		if (session.getAttribute("MyUserTicket") == null){
+			response.sendRedirect(super.request.getContextPath());
+            return false;
+        }
+		MyUserTicket = (MyUser)session.getAttribute("MyUserTicket");
+		request.setAttribute("MyUserTicket", MyUserTicket);
+        return true;
+	}	
 }

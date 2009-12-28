@@ -17,7 +17,7 @@
 		</tr>
 		<tr id="${myRoles.roleID}">
 			<td>				
-				<@ImgQButton id="Delete" action="Delete" title="删除" class="close"/>				
+				<@ImgQButton id="Delete" action="Delete" title="删除" />				
 			</td>	
 			<td id="RoleID">
 			${myRoles.roleID}
@@ -33,9 +33,9 @@
 		</tr>	
 		<tr>
 			<td colspan="8">				
-				<@ImgQButton id="SaveEdit" action="SaveEdit" title="保存" class="note"/>
-				<@ImgQButton id="RolesUser" action="RolesUser" title="所属用户" class="person"/>
-				<@ImgQButton id="RolePermisson" action="RolePermisson" title="权限设置" class="tag"/>
+				<@ImgQButton id="SaveEdit" action="Save" auth=false title="保存" />
+				<@ImgQButton id="RolesUser" action="RolesUser" auth=false title="所属用户" />
+				<@ImgQButton id="RolePermisson" action="RolePermisson" auth=false title="权限设置" />
 			</td>
 		</tr>
 	</table>

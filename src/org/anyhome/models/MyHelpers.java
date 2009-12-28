@@ -11,6 +11,8 @@
  */
 package org.anyhome.models;
 
+import java.util.List;
+
 /**
  * @author Ayhome
  *
@@ -23,6 +25,7 @@ public class MyHelpers {
 	private String Method;
 	private String ContextPath;
 	private String Uri;
+	private List<String> Permission;
 	public void setUrl(String url) {
 		Url = url;
 	}
@@ -64,5 +67,11 @@ public class MyHelpers {
 	}
 	public String getUri() {
 		return Uri;
+	}
+	public void setPermission(List<String> permission) {
+		Permission = permission;
+	}
+	public List<String> getPermission() {
+		return Permission;
 	}
 }

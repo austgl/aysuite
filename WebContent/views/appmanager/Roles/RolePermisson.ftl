@@ -5,12 +5,12 @@
 			<legend class="ui-widget-header ui-corner-all">现有权限</legend> 	
 				<ul id="PermissonList" class="RolePermissonList ui-helper-reset ui-helper-clearfix">
 					<li class="ui-widget-content ui-corner-tr">
-											<h5 class="ui-widget-header">初始权限</h5>
-											<img src="views/css/images/dmenu_test_graphics.png" alt="初始权限" width="32" height="48" />
+						<h5 class="ui-widget-header">初始权限</h5>
+						<img src="views/css/images/dmenu_test_graphics.png" alt="初始权限" width="32" height="48" />
 					</li>				
 				</ul>
 		</fieldset>			
-<@ImgQButton id="UpdatePermisson" action="UpdatePermisson" title="保存" class="note"/>		
+<@ImgQButton id="UpdatePermisson" action="UpdatePermisson" auth=false title="保存" class="note"/>		
 		<fieldset class="ui-widget-content ui-corner-all"> 
 			<legend class="ui-widget-header ui-corner-all">权限列表</legend> 
 				<ul id="RolePermissonList" class="RolePermissonList ui-helper-reset ui-helper-clearfix">
@@ -49,7 +49,9 @@ $(function() {
 	var id = $('input#RoleID').val();
 	var pageCode,p_Value=0,appid;
 	
-	$('#UpdatePermisson').click(function(){		
+	$('#UpdatePermisson').click(function(){	
+		if (Number(p_Value)<0)
+			p_Value=0;
 		$.post(url+'/UpdateRolePermisson/'+id,{pageCode:pageCode,p_Value:p_Value,ApplicationID:appid});
 		return false;
 	});	
@@ -103,11 +105,14 @@ $(function() {
 				$.getJSON(url+'/GetRolePermisson/'+id, 'pageCode='+pageCode,function(json){					
 					if(json.length>0){
 						var v =0;
+						p_Value = 0;
 						for(v=0; v<json.length; v++){										
-							p_Value = Number(p_Value) + Number(json[v].permissValue);
+
+						p_Value = Number(p_Value) + Number(json[v].permissValue);
+						
 							$("li[PermissValue='permissValue"+json[v].permissValue+"']").appendTo($('#PermissonList')).fadeIn();	
 							//alert("li[PermissValue='permissValue'"+json[v].permissValue+"]");
-						}
+						}												
 					}
 				});
 			}

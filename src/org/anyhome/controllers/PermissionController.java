@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.anyhome.CacheManager;
 import org.anyhome.Encrypt;
 import org.anyhome.Permission;
 import org.anyhome.models.MyPermissionValue;
@@ -70,8 +71,10 @@ public class PermissionController extends Controller{
 		return new TextView(s);
 	}
 	
-	public JsonView UserLogout() throws Exception{
+	public JsonView UserLogout(int id) throws Exception{
 		session.removeAttribute("MyUserTicket");
+		String key = id + "-Roles";
+		Permission.cache.remove(key);		
 		response.sendRedirect(request.getContextPath());
 		return new JsonView();		
 	}

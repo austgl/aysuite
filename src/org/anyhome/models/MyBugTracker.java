@@ -11,12 +11,19 @@ package org.anyhome.models;
 
 import java.util.Date;
 
+import org.anyhome.DateConverter;
+
 import com.et.ar.ActiveRecordBase;
+import com.et.ar.ConvertUtil;
 import com.et.ar.annotations.Column;
+import com.et.ar.annotations.HasOne;
 import com.et.ar.annotations.Id;
 import com.et.ar.annotations.Table;
 @Table(name="Ay_BugTracker")
 public class MyBugTracker extends ActiveRecordBase {
+	static{
+		ConvertUtil.register(new DateConverter(), java.sql.Date.class);
+	}
 			
 			@Id private Integer BugID;
 			
@@ -33,7 +40,9 @@ public class MyBugTracker extends ActiveRecordBase {
 			@Column private Date B_IsUpdate;
 			
 			@Column private Date B_Updata;
-		
+			
+			@HasOne(foreignKey="UserID")
+			private MyUser myUser;
 			
 			public void setBugID(Integer T_BugID){
 				BugID=T_BugID;
@@ -83,11 +92,16 @@ public class MyBugTracker extends ActiveRecordBase {
 			public Date getB_IsUpdate() {
 				return B_IsUpdate;
 			} 
-			
 			public void setB_Updata(Date T_B_Updata){
 				B_Updata=T_B_Updata;
 			}
 			public Date getB_Updata() {
 				return B_Updata;
+			}
+			public void setMyUser(MyUser myUser) {
+				this.myUser = myUser;
+			}
+			public MyUser getMyUser() {
+				return myUser;
 			} 
 }

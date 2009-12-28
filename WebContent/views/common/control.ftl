@@ -7,7 +7,21 @@
 </#macro>
 
 <#macro ImgQButton controller="" action="" id="" title="" auth=true disabled=true xtype="" class="" >
-    <a id="${id}" action="${action}" class="ui-state-default ui-icon ui-icon-${class}" href="${Helpers.uri}/${action}/${id}" title="${title}" style="float: left; margin-right: 0.3em;"></a>
+<#if auth==true>
+	<#if action!="">	
+		<#list Helpers.permission as item>
+			<#if action?upper_case==item?upper_case>
+				<a id="${id}" action="${Helpers.controller}.${item}" href="${Helpers.uri}/${item}/" title="${item}" class="submit ui-state-default "><img src="views/css/icons/${item}.png">${title}</a>	
+			</#if>
+		</#list>
+	<#else>
+		<#list Helpers.permission as item>
+		<a id="${id}" action="${Helpers.controller}.${item}" href="${Helpers.uri}/${item}/" title="${item}" class="submit ui-state-default ui-corner-all"><img src="views/css/icons/${item}.png">${title}</a>	
+		</#list>	
+	</#if>
+<#else>
+	<a id="${id}" action="${Helpers.controller}.${action}" href="${Helpers.uri}/${action}/${action}" title="${title}" class="submit ui-state-default ui-corner-all"><img src="views/css/icons/${action}.png">${title}</a>	
+</#if>
 </#macro>
 
 <#macro FormButton controller="" action="" id="" title="" auth=true disabled=true xtype="" >

@@ -524,7 +524,7 @@ public class ActiveRecordBase {
         String sql = "select * from " + orm.table;
         if (conditions != null && !conditions.equals("")){
             sql += " where " + conditions;
-        }
+        }        
         return findBySql(clasz, sql, args, order, limit, offset);
     }
     
@@ -615,7 +615,7 @@ public class ActiveRecordBase {
             DaoSupport dao = new DaoSupport(conn);
             if (adapter != null){
                 if (limit > 0){
-                    sql = adapter.getLimitString(sql, limit, offset);
+                    sql = adapter.getLimitString(sql, limit, offset);                    
                 }
                 if (adapter.supportsLimitOffset() == false){
                     return dao.select(clasz, sql, args, 0, offset);
@@ -624,7 +624,7 @@ public class ActiveRecordBase {
                     return dao.select(clasz, sql, args, 0, 0);
                 }
             }
-            else{
+            else{            	
                 return dao.select(clasz, sql, args, limit, offset);
             }
         }

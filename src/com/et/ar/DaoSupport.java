@@ -272,7 +272,7 @@ public class DaoSupport {
         }
         
         List<E> data = new ArrayList<E>();
-        List<Map<String,Object>> items = select(sql, args, limit, offset);
+        List<Map<String,Object>> items = select(sql, args, limit, offset);        
         for(Map<String,Object> item: items){
             E obj;
             if (useProxy == false){
@@ -314,7 +314,7 @@ public class DaoSupport {
         Object[] sqlParts = buildSql(sql, args);
         sql = sqlParts[0].toString();
         args = (Object[])sqlParts[1];
-        String sqlInfo = sqlParts[2].toString();
+        String sqlInfo = sqlParts[2].toString();        
         PreparedStatement pstmt = null;
         try{
         	long t1 = System.currentTimeMillis();

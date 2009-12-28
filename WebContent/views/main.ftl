@@ -18,7 +18,6 @@
 <script type="text/javascript" src="${jspath?html}views/js/jquery.desktop.js"></script>
 <script type="text/javascript" src="${jspath?html}views/js/ui.formValidator_min.js"></script>
 <script type="text/javascript" src="${jspath?html}views/js/jquery.form.js"></script>
-<script type="text/javascript" src="${jspath?html}views/js/jquery.linkbutton.js"></script>
 <script type="text/javascript" src="${jspath?html}views/js/jquery.tree.js"></script>
 <script type="text/javascript" src="${jspath?html}views/js/jquery.jgrowl.js"></script>
 <script type="text/javascript" src="${jspath?html}views/js/ui.ariaSorTable.js"></script>
@@ -28,8 +27,6 @@
 <link rel="stylesheet" type="text/css" href="${jspath?html}views/css/html.css">
 <link rel="stylesheet" type="text/css" href="${jspath?html}views/css/ui-start.css">
 <link rel="stylesheet" type="text/css" href="${jspath?html}views/css/Formular.css">
-<link rel="stylesheet" type="text/css" href="${jspath?html}views/css/linkbutton.css">
-<link rel="stylesheet" type="text/css" href="${jspath?html}views/css/linkbuttonicon.css">
 <link rel="stylesheet" type="text/css" href="${jspath?html}views/css/tree.css">
 <link rel="stylesheet" type="text/css" href="${jspath?html}views/css/icon.css">
 <link rel="stylesheet" type="text/css" href="${jspath?html}views/css/jquery.jgrowl.css">
@@ -132,7 +129,7 @@
 		<li id="modulemenu">
 			<li id="modulemenu2"><a class="menu_trigger" href="#">开始</a>
 				<ul class="menu">
-					<li><a href="Permission/UserLogout">注销</a></li>
+					<li><a href="Permission/UserLogout/${MyUserTicket.userID}">注销</a></li>
 					<li><a href="#">${MyUserTicket.u_CName}{${MyUserTicket.u_LoginName}}</a></li>					
 				</ul>
 			</li>

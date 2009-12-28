@@ -9,7 +9,7 @@
 /**
  * 
  */
-package org.anyhome.controllers.PublicInfo;
+package org.anyhome.controllers.Social;
 
 import java.util.List;
 

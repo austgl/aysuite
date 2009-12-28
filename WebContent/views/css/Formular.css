@@ -64,8 +64,12 @@ input.radio {
 }
 .submit {
 	float: left;
-	margin: 0.5em 1em;
+	margin: 2px;
+	padding: 4px;
 	cursor: pointer;
+}
+.submit 	img{
+	float: left;
 }
 
 
