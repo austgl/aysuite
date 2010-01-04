@@ -14,8 +14,6 @@ package org.anyhome.controllers.AppManager;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
-import org.anyhome.AMF3View;
 import org.anyhome.controllers.AdminController;
 import org.anyhome.models.MyModule;
 
@@ -90,17 +88,6 @@ public class ModuleController extends AdminController {
 	public JsonView GetAllJson() throws ActiveRecordException{
 		List<MyModule> myModule = MyModule.findAll(MyModule.class);
 		return new JsonView(myModule);
-	}
-	
-	public AMF3View List(int id) throws ActiveRecordException{
-		List<MyModule> myModule = MyModule.findAll(MyModule.class,"M_ParentID=? and M_Close=0",
-				new Object[]{id});
-		List<Map> lst = new ArrayList<Map>(); 
-		for(MyModule items:myModule)
-		{
-			lst.add(PojoToMap(items));
-		}
-		return new AMF3View(lst);
 	}
 	public TextView Delete(int id) throws ActiveRecordException{
 		MyModule myModule =MyModule.find(MyModule.class, id);
