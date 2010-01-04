@@ -2,7 +2,8 @@
 <div class="ui-widget ui-helper-clearfix">
 	<div id="GetRolePermisson" class="GetRolePermisson ui-helper-reset ui-helper-clearfix">
 		<fieldset class="ui-widget-content ui-corner-all"> 
-			<legend class="ui-widget-header ui-corner-all">现有权限</legend> 	
+			<legend class="ui-widget-header ui-corner-all"><@ImgQButton id="UpdatePermisson" action="UpdatePermisson" auth=false title="保存" icon="Save"/>		</legend> 
+
 				<ul id="PermissonList" class="RolePermissonList ui-helper-reset ui-helper-clearfix">
 					<li class="ui-widget-content ui-corner-tr">
 						<h5 class="ui-widget-header">初始权限</h5>
@@ -10,16 +11,19 @@
 					</li>				
 				</ul>
 		</fieldset>			
-<@ImgQButton id="UpdatePermisson" action="UpdatePermisson" auth=false title="保存" class="note"/>		
 		<fieldset class="ui-widget-content ui-corner-all"> 
 			<legend class="ui-widget-header ui-corner-all">权限列表</legend> 
 				<ul id="RolePermissonList" class="RolePermissonList ui-helper-reset ui-helper-clearfix">
+					<li class="ui-widget-content ui-corner-tr">
+						<h5 class="ui-widget-header">初始权限</h5>
+						<img src="views/css/images/dmenu_test_graphics.png" alt="初始权限" width="32" height="48" />
+					</li>				
 				<#list myPermission as item>
 					<li class="ui-widget-content ui-corner-tr" id='permissValue' PermissValue='permissValue${item.permissValue}' pv='${item.permissValue}' >
 						<h5 class="ui-widget-header">${item.permissName}</h5>
 						<img src="views/css/images/dmenu_test_graphics.png" alt="${item.permissName}" width="32" height="48" />
 					</li>
-				</#list>
+				</#list>				
 				</ul>
 		</fieldset>			
 	</div>
@@ -82,7 +86,7 @@ $(function() {
 			p_Value = Number(p_Value) - Number($item.attr('pv'));
 			$item.find('img').end().appendTo($RolePermissonList).fadeIn();
 		});
-	}	
+	}
 	function deleteImage($item) {		
 		$item.fadeOut(function() {	
 			var $list = $('ul',$PermissonList).length ? $('ul',$PermissonList) : $('<ul class="RolePermissonList ui-helper-reset"/>').appendTo($PermissonList);
@@ -101,8 +105,9 @@ $(function() {
 			selected:function(event, ui){				
 				pageCode = $(this).find('li.ui-selected').attr('id');
 				appid = $(this).find('li.ui-selected').attr('appid'); 
+				var moduleID = $(this).find('li.ui-selected').attr('moduleID'); 
 				$("li[id='permissValue']").appendTo($('#RolePermissonList')).fadeIn();
-				$.getJSON(url+'/GetRolePermisson/'+id, 'pageCode='+pageCode,function(json){					
+				$.getJSON(url+'/GetRolePermisson/'+id, {pageCode:pageCode,moduleID:moduleID},function(json){					
 					if(json.length>0){
 						var v =0;
 						p_Value = 0;
@@ -111,6 +116,7 @@ $(function() {
 						p_Value = Number(p_Value) + Number(json[v].permissValue);
 						
 							$("li[PermissValue='permissValue"+json[v].permissValue+"']").appendTo($('#PermissonList')).fadeIn();	
+							
 							//alert("li[PermissValue='permissValue'"+json[v].permissValue+"]");
 						}												
 					}
@@ -130,7 +136,6 @@ $(function() {
 #ModuleBox { float: right; width: 18%; min-height: 18em; padding: 1%;} * html 
 #ModuleBox { height: 18em; } /* IE6 */
 
-#feedback { font-size: 1.4em; }
 #selectable .ui-selecting { background: #FECA40; }
 #selectable .ui-selected { background: #F39814; color: white; }
 #selectable { list-style-type: none; margin: 0; padding: 0;}

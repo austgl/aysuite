@@ -1,8 +1,7 @@
 <#include "/common/control.ftl">
 <div class="window_aside" id="${Helpers.controller}">
 
-<@ImgQButton id="refresh" action="Add" title="刷新本页" class="refresh"/>
-<@ImgQButton id="Add" action="Add" title="新增" class="plusthick"/>
+<@ImgQButton id="refresh" action="refresh" title="刷新本页" auth=false  class="refresh"/>
 <br />
 <br />
 <div id="${Helpers.controller}_accordion">
@@ -24,6 +23,7 @@
 
 </div>
 <input type='hidden' id='${Helpers.controller}thisuri' value='${Helpers.uri}'>
+<@Script />
 <style type="text/css">
 	#feedback { font-size: 1.4em; }
 	#selectable .ui-selecting { background: #FECA40; }

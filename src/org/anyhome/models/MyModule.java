@@ -11,10 +11,16 @@
  */
 package org.anyhome.models;
 
+import java.util.List;
+
+import org.anyhome.OrmUtil;
+
 import com.et.ar.ActiveRecordBase;
 import com.et.ar.annotations.Column;
+import com.et.ar.annotations.HasMany;
 import com.et.ar.annotations.Id;
 import com.et.ar.annotations.Table;
+import com.et.ar.exception.ActiveRecordException;
 /**
  * @author Ayhome
  *
@@ -31,6 +37,17 @@ public class MyModule extends ActiveRecordBase {
 	@Column private Integer M_IsSystem;
 	@Column private Integer M_Close;
 	@Column private String M_Icon;
+
+	private List<MyModuleExtPermission> ModuleExtPermission;
+	
+	@Override
+	public void beforeDestroy() throws ActiveRecordException{
+		if (this.M_ParentID==0){
+			MyModule.deleteAll(MyModule.class, "M_ParentID=?", 
+					new Object[]{this.ModuleID});
+		}
+	}
+	
 	/**
 	 * @return the moduleID
 	 */
@@ -144,5 +161,11 @@ public class MyModule extends ActiveRecordBase {
 	 */
 	public String getM_Icon() {
 		return M_Icon;
+	}
+	public void setModuleExtPermission(List<MyModuleExtPermission> moduleExtPermission) {
+		ModuleExtPermission = moduleExtPermission;
+	}
+	public List<MyModuleExtPermission> getModuleExtPermission() throws ActiveRecordException {
+		return OrmUtil.getTheById(this.ModuleID);
 	}
 }

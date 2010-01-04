@@ -24,6 +24,7 @@
 <div id="${Helpers.controller}edit" title="">
 
 </div>
+<@Script />
 <input type='hidden' id='${Helpers.controller}thisuri' value='${Helpers.uri}'>
 <style type="text/css">
 #RolesUserBox { float: left; width: 60%; min-height: 12em; } * html #RolesUserBox { height: 12em; } /* IE6 */

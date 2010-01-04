@@ -1,7 +1,6 @@
 <#include "/common/control.ftl">
 <div class="window_aside" id="${Helpers.controller}">
-${Helpers.uri}
-<@ImgQButton id="refresh" action="Add" title="新增" class="refresh"/>
+<@ImgQButton id="refresh" action="refresh" title="刷新本页" auth=false icon="refresh"/>
 </div>
 <div class="window_main">
 	<table class="data list" id="Applications" >
@@ -25,7 +24,7 @@ ${Helpers.uri}
 		<#list myApp as item>	
 		<tr id="${item.applicationID}">
 			<td>				
-				<@ImgQButton id="${item.applicationID}" action="Delete" title="删除" class="close"/>
+				<@ImgQButton id="${item.applicationID}" action="Delete" class="close"/>
 			</td>	
 			<td id="applicationID">
 				${item.applicationID}
@@ -42,7 +41,7 @@ ${Helpers.uri}
 		</tr>		
 		</#list>
 		<tr>
-			<td colspan="4"><@ImgQButton id="Add" action="Add" title="新增" class="plusthick"/></td>
+			<td colspan="4"><@ImgQButton id="Add" action="Create" title="新增" /></td>
 		</tr>
 	</table>
 	<form action="" method="post" id="Applications">
@@ -62,9 +61,36 @@ ${Helpers.uri}
 		</fieldset>	
 	</form>
 </div>
+<@Script />
 <script>
 $(function() {
-	
+		$("A[action*='Delete']").click(function(){
+			var s = $(this);
+			var getUrl = $(this).attr('href');
+	      $("#Deldialog").clone().dialog({
+	        bgiframe: true,
+	        resizable: false,
+	        height:140,
+	        modal: true,
+	        overlay: {
+	          backgroundColor: '#000',
+	          opacity: 0.5
+	        },
+	        buttons: {
+	          '确定': function() {
+	            //$(this).dialog('close');
+	        	$.get(getUrl); 
+	            $(this).remove();
+				s.remove();
+	          },
+	          '取消': function() {
+	            //$(this).dialog('close');
+	            $(this).remove();
+	          }
+	        }
+	      });	
+	      return false;
+		});	
 	$('div.window_main').find('A#Add').click(function(){
 		$('#Applications.list').hide('clip',{},500,function(){		
 			//$("form#Applications").show().fadeIn();

@@ -17,10 +17,9 @@
 		</tr>
 		<tr id="${myRoles.roleID}">
 			<td>				
-				<@ImgQButton id="Delete" action="Delete" title="删除" />				
+				<@ImgQButton id="${myRoles.roleID}" action="Delete" />				
 			</td>	
 			<td id="RoleID">
-			${myRoles.roleID}
 				<input type='hidden' id='RoleID' name='RoleID' value='${myRoles.roleID}' />
 			</td>			
 			<td id="R_RoleName">
@@ -80,5 +79,33 @@ $(function() {
 		});
 		return false;
 	});	
+		$("A[action*='Delete']").click(function(){
+			var s = $(this);
+			var getUrl = url+'/Delete/'+$(this).attr('id');
+	      $("#Deldialog").clone().dialog({
+	        bgiframe: true,
+	        resizable: false,
+	        height:140,
+	        modal: true,
+	        overlay: {
+	          backgroundColor: '#000',
+	          opacity: 0.5
+	        },
+	        buttons: {
+	          '确定': function() {
+	            //$(this).dialog('close');
+	        	$.get(getUrl); 
+	            $(this).remove();
+				s.remove();
+	          },
+	          '取消': function() {
+	            //$(this).dialog('close');
+	            $(this).remove();
+	          }
+	        }
+	      });	
+	      return false;
+		});		
+	
 });			
 </script>	

@@ -1124,7 +1124,8 @@ public class ActiveRecordBase {
                     }
                 }
                 else{
-                    ActiveRecordBase.updateAll(field.getTargetType(), field.getForeignKey()+"=null", null, field.getForeignKey()+"=?", new Object[]{idValue});
+                	//2009年12月29日 修改 不更新关联的键
+                    //ActiveRecordBase.updateAll(field.getTargetType(), field.getForeignKey()+"=null", null, field.getForeignKey()+"=?", new Object[]{idValue});
                 }
             }
             for(HasOneField field: orm.hasOneFields){
@@ -1143,7 +1144,8 @@ public class ActiveRecordBase {
                     }
                 }
                 else{
-                    ActiveRecordBase.updateAll(field.getTargetType(), field.getForeignKey()+"=null", null, field.getForeignKey()+"=?", new Object[]{idValue});
+                	//2009年12月29日 修改 不更新关联的键
+                    //ActiveRecordBase.updateAll(field.getTargetType(), field.getForeignKey()+"=null", null, field.getForeignKey()+"=?", new Object[]{idValue});
                 }
             }
             

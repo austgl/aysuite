@@ -9,13 +9,12 @@
 package org.anyhome.controllers.AppManager;
 
 import java.util.List;
-import org.anyhome.AMF3View;
 import org.anyhome.controllers.AdminController;
 import org.anyhome.models.MyApplications;
-import org.anyhome.models.MyUser;
 
 import com.et.ar.exception.ActiveRecordException;
 import com.et.mvc.FreeMarkerView;
+import com.et.mvc.JsonView;
 
 
 public class ApplicationsController extends AdminController {
@@ -66,18 +65,10 @@ public class ApplicationsController extends AdminController {
 		
 	}
 	
-	public FreeMarkerView Delete(int id) throws ActiveRecordException{
+	public JsonView Delete(int id) throws ActiveRecordException{
 		MyApplications myApp = MyApplications.find(MyApplications.class, id);
 		myApp.destroy();	
-		return new FreeMarkerView();
-	}
-	
-	public AMF3View test() throws ActiveRecordException{
-		String userName = request.getParameter("userName");
-		String password = request.getParameter("password");
-		MyUser myUser = MyUser.findFirst(MyUser.class,"U_LoginName=?",
-				new Object[]{userName});
-		return new AMF3View(myUser);		
-	}		
+		return new JsonView();
+	}	
 }
 

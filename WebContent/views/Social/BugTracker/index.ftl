@@ -1,8 +1,9 @@
 <#include "/common/control.ftl">
 <div class="window_aside" id="${Helpers.controller}">
-<@ImgQButton id="refresh" action="refresh" title="刷新本页" auth=false class="refresh"/>
+<@ImgQButton id="refresh" action="refresh" title="刷新本页" auth=false icon="refresh"/>
 </div>
 <div class="window_main" id="${Helpers.controller}">
+	<div id="${Helpers.controller}" >
 	<table class="data list" id="${Helpers.controller}" >
 		<tr>
 			<th class="shrink" >
@@ -40,28 +41,62 @@
 			</td>	
 		</tr>	
 	</#list>
-		<tr>
-			<td colspan="5"><@ImgQButton /></td>
-		</tr>
-	</table>	
-	</ul>
+	</table>
+	<@ImgQButton />
+	</div>
+	<div id="${Helpers.controller}Details" class="ui-widget-content">
+	</div>
+	<div id="${Helpers.controller}Create" >
+	<form action="${Helpers.uri}/SaveCreate" id="${Helpers.controller}Create" method="POST">
+		<input type="hidden" id="B_Userid" name="B_Userid" value='${MyUserTicket.userID}' /> 				
+		<input type="hidden" id="B_Url" name="B_Url" value='${Helpers.uri}' />
+		<input type="hidden" id="B_IsUpdate" name="B_IsUpdate" value='0' />
+		<input type="hidden" id="B_Module" name="B_Module" value='${Helpers.controller}' /> 	
+		<textarea name="B_BugContent" id="B_BugContent" rows="10" class="text ui-widget-content ui-corner-all"></textarea> 
+	<@ImgQButton id="SaveCreate" title="保存" auth=false icon="Create" />	
+	<form>
+	</div>	
 </div>
-<div id="${Helpers.controller}Details" class="ui-widget-content">
-</div>
+
 <style type="text/css">
 </style>
+<@Script />
 <script>
 $(function() {	
-	$Details = $("#${Helpers.controller}Details");
-	$Details.hide();
+	$Create=$('#${Helpers.controller}Create').hide();
+	
+	$Details = $("#${Helpers.controller}Details").hide();
+	
 	$('#refresh').click(function(){
 		$('#${Helpers.controller}').parent().load('${Helpers.uri}');
 		return false;
 	});	
 	$('a[action]').click(function(){
-		if ($(this).attr('action')=='${Helpers.controller}.refresh')
-			return false;
+		var action = $(this).attr('action');
 		var $s = $('table#${Helpers.controller}');		
+		if (action=='${Helpers.controller}.refresh')
+			return false;
+			
+		if(action=='${Helpers.controller}.Delete'){
+			return false;
+		}
+		//
+		if (action=='${Helpers.controller}.Create'){
+			$s.parent().hide('clip',{},500,function(){	
+				$("div#${Helpers.controller}Create").show('clip',{},500,function(){
+					$("#B_BugContent").xheditor(true,{tools:'mini'}).css("width","100%");
+					$(this).find('#SaveCreate').click(function(){
+						$('form#${Helpers.controller}Create').ajaxSubmit(function(){
+							$s.parent().show('clip',{},500,function(){});							
+							$('#${Helpers.controller}').parent().load('${Helpers.uri}');
+							return false;
+						});						
+					});
+				});	
+			});
+			return false;			
+		}
+		
 		var id = $s.find('tr.active.ui-state-default.ui-corner-tr').attr('id');	
 		if (id==null || id ==''){
 			$s.effect('highlight',{},600,null);

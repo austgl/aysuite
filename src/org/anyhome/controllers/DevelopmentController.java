@@ -20,6 +20,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.anyhome.Permission;
 import org.anyhome.models.MyDevelopment;
 
 import com.et.ar.ConnectionHolder;
@@ -33,13 +34,18 @@ import com.et.mvc.FreeMarkerView;
 public class DevelopmentController extends AdminController {
 
 	public FreeMarkerView index() throws DataAccessException, SQLException{
-		FreeMarkerView view = new FreeMarkerView();
-		
-		ConnectionHolder connectionHolder = new ConnectionHolder(MyDevelopment.class);
-		Connection conn = connectionHolder.getConnection();
-		DatabaseMetaData dbmd = conn.getMetaData();
-		String[] types = { "TABLE" };
-		ResultSet resultSet = dbmd.getTables(null, null, "%", types);
+		FreeMarkerView view = new FreeMarkerView();				
+		ResultSet resultSet = null;
+		String key = "Data-Development";
+		if (Permission.cache.get(key)!=null){
+			resultSet = (ResultSet)Permission.cache.get(key);
+		}else{
+			ConnectionHolder connectionHolder = new ConnectionHolder(MyDevelopment.class);
+			Connection conn = connectionHolder.getConnection();
+			DatabaseMetaData dbmd = conn.getMetaData();
+			String[] types = { "TABLE" };
+			resultSet = dbmd.getTables(null, null, "%", types);
+		}
 		List<MyDevelopment> myDevelopment  = new ArrayList<MyDevelopment>();;
 		while (resultSet.next()) {
 		      MyDevelopment myd = new MyDevelopment();

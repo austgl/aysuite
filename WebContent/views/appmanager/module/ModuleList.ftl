@@ -28,7 +28,7 @@
 		</tr>
 		<tr id="${myModule.moduleID}">
 			<td>				
-				<@ImgQButton id="Delete" action="Delete" title="删除" class="close"/>
+				<@ImgQButton id="Delete" url="${Helpers.uri}/../../Delete/${myModule.moduleID}" action="Delete" />
 			</td>	
 			<td id="ModuleID">
 				${myModule.moduleID}
@@ -54,8 +54,9 @@
 		</tr>	
 		<tr>
 			<td colspan="8">
-				<@ImgQButton id="Add" action="Add" title="新增" class="plusthick"/>
-				<@ImgQButton id="Add" action="Add" title="新增" class="plusthick"/>
+				<@ImgQButton id="Add" action="Create" title="新增子模块"/>
+				<@ImgQButton id="Add" action="Delete" title="删除父级模块" />
+				<@ImgQButton id="Add" action="ModulePiss" auth=false title="模块权限" />
 			</td>
 		</tr>
 	</table>

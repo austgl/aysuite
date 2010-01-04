@@ -11,7 +11,6 @@
  */
 package org.anyhome;
 
-import org.anyhome.models.MyModule;
 import org.anyhome.models.MyUser;
 
 import com.et.mvc.Controller;
@@ -50,15 +49,16 @@ public class AroundFilter implements AroundHandler {
 		else if (MyUserTicket.getU_Type()==1){
 			String actionName = controller.getActionName();
 			String controllerName = controller.getControllerName();
-			String pageCode = "";
-			int appId=0;
 			int userid = MyUserTicket.getUserID();
 			int PermissonValue = 0;		
 			if (actionName.toLowerCase()=="index"){
 				actionName = "list";
 			}	
 			actionName = actionName.toLowerCase();	
-			actionName = actionName.replace("save", "");
+			if (actionName=="saveedit")
+				actionName="edit";
+			else if(actionName=="savecreate")
+				actionName="create";
 			for (String s:Permission.PopedomType().keySet()){
 				if (actionName==s.toLowerCase())
 					PermissonValue = Permission.PopedomType().get(s);
@@ -66,16 +66,10 @@ public class AroundFilter implements AroundHandler {
 			if (controllerName.toLowerCase()=="applications")
 				controllerName="application";
 			if (!controllerName.toLowerCase().equals("desktop")){
-				MyModule myModule =MyModule.findFirst(MyModule.class,
-						"M_Directory=?",new Object[]{controllerName});
-				if (myModule!=null){
-					pageCode = myModule.getM_PageCode();
-					appId = myModule.getM_ApplicationID();
-				}
 				if (controllerName=="desktop")
 					return true;
 				else
-					return Permission.CheckPermission(userid, appId, pageCode, PermissonValue);		
+					return Permission.CheckPermission(userid, controllerName, PermissonValue);		
 			}
 		}
 		return true;

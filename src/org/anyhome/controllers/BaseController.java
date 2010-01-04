@@ -12,18 +12,18 @@
 package org.anyhome.controllers;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import org.anyhome.CacheManager;
+import org.anyhome.DateBinder;
+import org.anyhome.DateConverter;
 import org.anyhome.Permission;
 import org.anyhome.models.MyHelpers;
 import org.anyhome.models.MyPermissionValue;
 import org.anyhome.models.MyUser;
 
+import com.et.ar.ConvertUtil;
 import com.et.ar.exception.ActiveRecordException;
 import com.et.mvc.Controller;
+import com.et.mvc.binding.DataBinders;
 import com.et.mvc.filter.AroundFilter;
 import com.et.mvc.filter.BeforeFilter;
 import com.et.mvc.filter.BeforeFilters;
@@ -39,7 +39,15 @@ import com.et.mvc.filter.BeforeFilters;
 })
 @AroundFilter(execute=org.anyhome.AroundFilter.class)
 public class BaseController extends Controller {
+	
 	protected MyUser MyUserTicket;
+	
+	static{ 
+		ConvertUtil.register(new DateConverter(), java.sql.Date.class); 
+		//java.lang.String
+		DataBinders.register(java.util.Date.class, new DateBinder());
+	} 
+
 	protected boolean InitPages() throws ActiveRecordException{
 		MyHelpers Helpers = new MyHelpers();
 		Helpers.setAction(super.getActionName());
@@ -52,17 +60,8 @@ public class BaseController extends Controller {
 		if (ss!="desktop"){
 			if (MyUserTicket!=null){
 				List<String> lst = new ArrayList<String>();
-				if (MyUserTicket.getU_Type()!=0){					
-					int PermissValue = Permission.PermissionValue(super.getControllerName());
-					System.out.println("PermissValue"+PermissValue);
-					for (String s:Permission.PopedomType().keySet()){
-						if ((PermissValue & Permission.PopedomType().get(s))==Permission.PopedomType().get(s)){
-							MyPermissionValue PermissionValue = new MyPermissionValue();
-							PermissionValue.setPermissName(s);
-							PermissionValue.setPermissValue(Permission.PopedomType().get(s));							
-							lst.add(s);					
-						}				
-					}					
+				if (MyUserTicket.getU_Type()!=0){	
+					lst = Permission.CheckAndPermiss(MyUserTicket.getUserID(),super.getControllerName());					
 				}else{
 					for (String s:Permission.PopedomType().keySet()){
 						lst.add(s);				

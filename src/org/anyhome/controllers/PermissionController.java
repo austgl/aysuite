@@ -22,6 +22,7 @@ import org.anyhome.Permission;
 import org.anyhome.models.MyPermissionValue;
 import org.anyhome.models.MyUser;
 
+import com.et.ar.exception.ActiveRecordException;
 import com.et.mvc.Controller;
 import com.et.mvc.FreeMarkerView;
 import com.et.mvc.JsonView;
@@ -55,7 +56,15 @@ public class PermissionController extends Controller{
 		}
 		view.setAttribute("myPermission", myPermissionValue);
 		return view;
-	}	 		
+	}	 
+	
+	public FreeMarkerView FMGetAllUser() throws ActiveRecordException{
+		FreeMarkerView view = new FreeMarkerView();
+		List<MyUser> myUser = MyUser.findAll(MyUser.class);
+		view.setAttribute("myUser", myUser);		
+		return view;
+	}
+	
 	public TextView UserLogin() throws Exception{
 		String s="用户名或密码错误";
 		String userName = request.getParameter("userName");

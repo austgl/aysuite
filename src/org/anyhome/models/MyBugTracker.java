@@ -11,19 +11,15 @@ package org.anyhome.models;
 
 import java.util.Date;
 
-import org.anyhome.DateConverter;
+import org.anyhome.OrmUtil;
 
 import com.et.ar.ActiveRecordBase;
-import com.et.ar.ConvertUtil;
 import com.et.ar.annotations.Column;
-import com.et.ar.annotations.HasOne;
 import com.et.ar.annotations.Id;
 import com.et.ar.annotations.Table;
+import com.et.ar.exception.ActiveRecordException;
 @Table(name="Ay_BugTracker")
 public class MyBugTracker extends ActiveRecordBase {
-	static{
-		ConvertUtil.register(new DateConverter(), java.sql.Date.class);
-	}
 			
 			@Id private Integer BugID;
 			
@@ -35,13 +31,12 @@ public class MyBugTracker extends ActiveRecordBase {
 			
 			@Column private String B_BugContent;
 			
-			@Column private Date B_Dtime;
+			@Column private java.sql.Date B_Dtime;
 			
-			@Column private Date B_IsUpdate;
+			@Column private Boolean B_IsUpdate;
 			
-			@Column private Date B_Updata;
-			
-			@HasOne(foreignKey="UserID")
+			@Column private java.sql.Date B_Updata;
+
 			private MyUser myUser;
 			
 			public void setBugID(Integer T_BugID){
@@ -79,29 +74,26 @@ public class MyBugTracker extends ActiveRecordBase {
 				return B_BugContent;
 			} 
 			
-			public void setB_Dtime(Date T_B_Dtime){
+			public void setB_Dtime(java.sql.Date T_B_Dtime){
 				B_Dtime=T_B_Dtime;
 			}
-			public Date getB_Dtime() {
+			public java.sql.Date getB_Dtime() {
 				return B_Dtime;
 			} 
 			
-			public void setB_IsUpdate(Date T_B_IsUpdate){
+			public void setB_IsUpdate(Boolean T_B_IsUpdate){
 				B_IsUpdate=T_B_IsUpdate;
 			}
-			public Date getB_IsUpdate() {
+			public Boolean getB_IsUpdate() {
 				return B_IsUpdate;
 			} 
-			public void setB_Updata(Date T_B_Updata){
+			public void setB_Updata(java.sql.Date T_B_Updata){
 				B_Updata=T_B_Updata;
 			}
 			public Date getB_Updata() {
 				return B_Updata;
 			}
-			public void setMyUser(MyUser myUser) {
-				this.myUser = myUser;
-			}
-			public MyUser getMyUser() {
-				return myUser;
+			public MyUser getMyUser() throws ActiveRecordException {
+				return OrmUtil.getUserById(this.B_Userid);
 			} 
 }

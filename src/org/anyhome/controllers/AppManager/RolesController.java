@@ -18,6 +18,7 @@ import org.anyhome.Permission;
 import org.anyhome.controllers.AdminController;
 import org.anyhome.models.MyApplications;
 import org.anyhome.models.MyModule;
+import org.anyhome.models.MyModuleExtPermission;
 import org.anyhome.models.MyPermissionValue;
 import org.anyhome.models.MyRoleApplication;
 import org.anyhome.models.MyRolePermission;
@@ -174,6 +175,15 @@ public class RolesController extends AdminController {
 					myPermissValue.add(PermissionValue);					
 				}				
 			}			
+		}
+		int moduleID=Integer.parseInt(request.getParameter("moduleID"));
+		List<MyModuleExtPermission> extP = MyModuleExtPermission.findAll(MyModuleExtPermission.class,
+				"ModuleID=?",new Object[]{moduleID});
+		for (MyModuleExtPermission item:extP){
+			MyPermissionValue m = new MyPermissionValue();
+			m.setPermissName(item.getPermissionName());
+			m.setPermissValue(item.getPermissionValue());
+			myPermissValue.add(m);
 		}
 		return new JsonView(myPermissValue);		
 	}

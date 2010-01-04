@@ -21,6 +21,8 @@
 <script type="text/javascript" src="${jspath?html}views/js/jquery.tree.js"></script>
 <script type="text/javascript" src="${jspath?html}views/js/jquery.jgrowl.js"></script>
 <script type="text/javascript" src="${jspath?html}views/js/ui.ariaSorTable.js"></script>
+<script type="text/javascript" src="${jspath?html}views/js/xheditor.js"></script>
+
 
 
 <link rel="stylesheet" type="text/css" href="${jspath?html}views/css/desktop.css">

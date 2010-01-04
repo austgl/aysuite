@@ -11,11 +11,13 @@
  */
 package org.anyhome;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.anyhome.models.MyModule;
+import org.anyhome.models.MyPermissionValue;
 import org.anyhome.models.MyRolePermission;
 import org.anyhome.models.MyUserRoles;
 
@@ -25,8 +27,7 @@ import com.et.ar.exception.ActiveRecordException;
  * @author anyhome
  *
  */
-public class Permission {
-	
+public class Permission {	
 	public static CacheManager cache = CacheManager.getInstance();
 	@SuppressWarnings("unchecked")	
 	public static Map<String, Integer> PopedomType(){		
@@ -45,100 +46,132 @@ public class Permission {
 		}
 		return popedomType;		
 	}
+	
+	public static List<String> CheckAndPermiss(int UserID,String Directory) throws ActiveRecordException{
+		List<String> lst = new ArrayList<String>();
+		for (String s:PopedomType().keySet()){
+			if (CheckPermission(UserID,Directory,PopedomType().get(s))){
+				MyPermissionValue PermissionValue = new MyPermissionValue();
+				PermissionValue.setPermissName(s);
+				PermissionValue.setPermissValue(Permission.PopedomType().get(s));							
+				lst.add(s);					
+			}
+		}
+		return lst;
+	}
+	
 	/**
 	 * 
 	 * @param UserID
 	 * @param appId
-	 * @param PageCode
+	 * @param Directory
 	 * @param CheckValue
 	 * @return
 	 * @throws ActiveRecordException
 	 */
-	public static Boolean CheckPermission(int UserID, int appId, String PageCode, int CheckValue) throws ActiveRecordException{				
-		MyRolePermission RolePermission = RolePermission(appId,PageCode);//先获取所属权限的角色
-		if (RolePermission==null)
-			return false;
-		int roleId = RolePermission.getP_RoleID();
-		String key = roleId + "-Roles";
-		//根据用户用户得到对应角色MAP 再查找是否存在于其中
-		if (UserInRoles(UserID).get(key)==null){
-			return false;
-		}else if( (RolePermission.getP_Value()&CheckValue)==CheckValue ){
-			return true;
-		}else{
-			return false;
-		}
-	}	
+	public static Boolean CheckPermission(int UserID,String Directory, int CheckValue) throws ActiveRecordException{				
 
+		//int PermissValue = MaxPermissionValue(UserID,Directory);
+		List<MyRolePermission> myRolePermission =PermissionValueList(UserID,Directory);
+		if (myRolePermission==null)
+			return false;
+		for(MyRolePermission itme:myRolePermission){
+			//System.out.println(Directory+"-"+CheckValue);
+			if ((itme.getP_Value()&CheckValue)==CheckValue)
+				return true;
+		}
+		return false;
+	}	
+	
 	/**
-	 * 根据用户ID获取所属角色MAP 可用于检查用户是否属于某个角色
+	 * 根据用户获取所属角色
 	 * @param userId
 	 * @return
 	 * @throws ActiveRecordException
 	 */
-	@SuppressWarnings("unchecked")
-	private static Map<String,List<MyUserRoles>> UserInRoles(int userId) throws ActiveRecordException{		
+	@SuppressWarnings({ "unchecked"})
+	private static List<MyUserRoles> UserRoles(int userId) throws ActiveRecordException{
 		String key = userId + "-Roles";
-		Map<String,MyUserRoles> m = new HashMap<String, MyUserRoles>();
-		if (cache.get(key)!=null){
-			return (Map<String,List<MyUserRoles>>) cache.get(key);
+		if (cache.get(key)!=null){			
+			return (List<MyUserRoles>)cache.get(key);
 		}else{
-			List<MyUserRoles> UserRoles = MyUserRoles.findAll(MyUserRoles.class,
+			List<MyUserRoles> Roles = MyUserRoles.findAll(MyUserRoles.class,
 					"R_UserID=?",new Object[]{userId});
-			for(MyUserRoles item:UserRoles){
-				String k = item.getR_RoleID().toString() + "-Roles";
-				m.put(k, item);				
-			}
-			cache.put(m, key, new String[]{"UserRoleskey"});
-			return (Map<String,List<MyUserRoles>>) cache.get(key);
+			cache.put(Roles, key, new String[]{"UserRoleskey"});
+			return (List<MyUserRoles>)cache.get(key);
+		}
+	}
+	
+	/**
+	 * 根据角色和模块代码 获取 权限实体
+	 * @param rolesId
+	 * @param PageCode
+	 * @return
+	 * @throws ActiveRecordException
+	 */
+	private static MyRolePermission RolePermission(int rolesId,String PageCode) throws ActiveRecordException{
+		String key = rolesId + "-Permission-"+PageCode;
+		MyRolePermission e = new MyRolePermission();
+		if (cache.get(key)!=null){
+			return (MyRolePermission)cache.get(key);			
+		}else{
+			e = MyRolePermission.findFirst(MyRolePermission.class,
+					"P_RoleID=? and P_PageCode=?",new Object[]{rolesId,PageCode});
+			if (e!=null){
+				cache.put(e, key, new String[]{"RolePermissionkey"});
+				return (MyRolePermission)cache.get(key);
+			}else{
+				return null;
+			}			
 		}
 	}
 	
 	/**
 	 * 
-	 * @param appId
-	 * @param PageCode
-	 * @returnMyRolePermission
+	 * @param userId
+	 * @param Directory
+	 * @return
 	 * @throws ActiveRecordException
 	 */
-	private static MyRolePermission RolePermission(int appId, String PageCode) throws ActiveRecordException{		
-		String key = appId+ "-"+PageCode;
-		if (cache.get(key)!=null){
-			return (MyRolePermission)cache.get(key);
-		}else{
-			MyRolePermission myRolePermission = MyRolePermission.findFirst(MyRolePermission.class,
-					"P_ApplicationID=? and P_PageCode=?",new Object[]{appId,PageCode});
-			if (myRolePermission!=null){
-				cache.put(myRolePermission, key, new String[]{"Permissionkey"});
-				myRolePermission = (MyRolePermission)cache.get(key);
-			}else{
-				myRolePermission = null;
-			}
-			
-			return myRolePermission;
-		}
-	}
-	
-	public static Integer PermissionValue(String Directory) throws ActiveRecordException{		
-		String key = Directory + "-Directory-Module";
+	public static List<MyRolePermission> PermissionValueList(int userId,String Directory) throws ActiveRecordException{
+		List<MyUserRoles> userRoles = UserRoles(userId);
+		if (UserRoles(userId)==null)
+			return null;
+		String key = Directory + "-Directory-Module";			
 		String PageCode = "";
-		int appId = 0;
 		if (cache.get(key)!=null){
-			appId = ((MyModule)cache.get(key)).getM_ApplicationID();
 			PageCode = ((MyModule)cache.get(key)).getM_PageCode();
-			System.out.println("cache PermissionValue");
 		}else{
 			MyModule myModule = MyModule.findFirst(MyModule.class,
 					"M_Directory=?",new Object[]{Directory});
 			cache.put(myModule, key, new String[]{"Modulekey"});
-			appId = ((MyModule)cache.get(key)).getM_ApplicationID();
 			PageCode = ((MyModule)cache.get(key)).getM_PageCode();
 		}
-		MyRolePermission mm = RolePermission(appId,PageCode);
-		if (mm==null)
-			return 0;
-		else
-			return mm.getP_Value();
+		List<MyRolePermission> myRolePermission = new ArrayList<MyRolePermission>();
+		for(MyUserRoles item:userRoles){
+			MyRolePermission e = RolePermission(item.getR_RoleID(),PageCode);
+			if (e!=null)
+				myRolePermission.add(e);
+		}		
+		return myRolePermission;
 	}
+	
+	/**
+	 * 根据目录名称获和用户ID取最大权限值
+	 * @param userId
+	 * @param Directory
+	 * @return
+	 * @throws ActiveRecordException
+	 */
+	public static Integer MaxPermissionValue(int userId,String Directory) throws ActiveRecordException{				
+		List<MyRolePermission> myRolePermission =PermissionValueList(userId,Directory);
+		int maxValue =0;
+		for(MyRolePermission item:myRolePermission){
+			if (maxValue<item.getP_Value())
+				maxValue=item.getP_Value();
+		}
+		return maxValue;
+	}
+
 	
 }

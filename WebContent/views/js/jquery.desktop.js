@@ -2,7 +2,7 @@
 // Namespace - Module Pattern.
 //
 	function InitPageParms(ts){
-		$("A[action='Delete']").click(function(){
+		$("A[action*='Delete']").click(function(){
 			var s = $(this);
 			var getUrl = $(this).attr('href');
 	      $("#Deldialog").clone().dialog({
@@ -450,46 +450,7 @@ var JQD = (function($) {
 				// Maximize or restore the window.
 				y.find('a.window_resize').click(function() {
 					JQD.window_resize(this);
-				});
-
-				y.mousedown(function() {
-					// Bring window to front.
-					JQD.window_flat();
-					$(this).addClass('window_stack');
-				}).draggable({
-					// Confine to desktop.
-					// Movable via top bar only.
-					containment: 'parent',
-					handle: 'div.window_top'
-				}).resizable({
-					containment: 'parent',
-					minWidth: 400,
-					minHeight: 200
-
-				// Double-click top bar to resize, ala Windows OS.
-				}).find('div.window_top').dblclick(function() {
-					JQD.window_resize(this);
-
-				// Double click top bar icon to close, ala Windows OS.
-				}).find('img').dblclick(function() {
-					// Traverse to the close button, and hide its taskbar button.
-					$($(this).closest('div.window_top').find('a.window_close').attr('href')).hide('fast');
-
-					// Close the window itself.
-					$(this).closest('div.window').hide();
-
-					// Stop propagation to window's top bar.
-					return false;
-				});				
-				
-				// Close the window.
-				y.find('a.window_close').click(function() {
-					$(this).closest('div.window').hide();
-					$($(this).attr('href')).hide('fast');
-					if ($(this).closest('div.window').attr('id')!='window_computer')
-						$(this).closest('div.window').remove();	
-					return false;
-				});				
+				});		
 				//-------------
 				// 窗体置前.
 				JQD.window_flat();
