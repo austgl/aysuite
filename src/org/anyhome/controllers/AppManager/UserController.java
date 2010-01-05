@@ -9,8 +9,10 @@
 package org.anyhome.controllers.AppManager;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.anyhome.Encrypt;
 import org.anyhome.controllers.AdminController;
 import org.anyhome.models.MyGroup;
 import org.anyhome.models.MyUser;
@@ -18,7 +20,6 @@ import org.anyhome.models.MyUser;
 import com.et.ar.exception.ActiveRecordException;
 import com.et.mvc.FreeMarkerView;
 import com.et.mvc.JsonView;
-import com.et.mvc.TextView;
 
 public class UserController extends AdminController {
 
@@ -31,10 +32,17 @@ public class UserController extends AdminController {
 		return view;
 	}	
 	
-	public FreeMarkerView UserByGroup(int id)throws ActiveRecordException{
+	public FreeMarkerView UserByGroup()throws ActiveRecordException{
 		FreeMarkerView view = new FreeMarkerView();
-		List<MyUser> myUser = MyUser.findAll(MyUser.class,"U_GroupID=?",
-				new Object[]{id});
+		String id = request.getParameter("id");
+		if (id=="" || id==null)
+			id="0";
+		List<MyUser> myUser = new ArrayList<MyUser>();
+		if(id=="0")
+			myUser = MyUser.findAll(MyUser.class);
+		else
+			myUser = MyUser.findAll(MyUser.class,"U_GroupID=?",
+					new Object[]{id});
 		view.setAttribute("myUser", myUser);
 		return view;		
 	}
@@ -60,7 +68,12 @@ public class UserController extends AdminController {
 		return view;		
 	}
 	
+	public FreeMarkerView Create(){
+		return new FreeMarkerView();
+	}
+	
 	public JsonView SaveCreate(MyUser myUser) throws ActiveRecordException{
+		myUser.setU_Password(Encrypt.MD5(myUser.getU_Password()));
 		if (myUser.save())
 			return null;
 		return new JsonView();

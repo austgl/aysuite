@@ -55,8 +55,8 @@
 		<tr>
 			<td colspan="8">
 				<@ImgQButton id="Add" action="Create" title="新增子模块"/>
-				<@ImgQButton id="Add" action="Delete" title="删除父级模块" />
-				<@ImgQButton id="Add" action="ModulePiss" auth=false title="模块权限" />
+				<@ImgQButton url="${Helpers.uri}/../../Delete/${myModule.m_ParentID}" action="Delete" title="删除父级模块" />
+				<@ImgQButton id="${myModule.m_ParentID}" action="ModulePiss" auth=false title="模块权限" />
 			</td>
 		</tr>
 	</table>
@@ -64,15 +64,15 @@
 <!----------表单----------->
 <form action="" method="post" id="${Helpers.action}">
 	<fieldset class="ui-widget-content ui-corner-all edit" id="${Helpers.controller}" > 
-	<legend class="ui-widget-header ui-corner-all">新增模块组</legend> 
+	<legend class="ui-widget-header ui-corner-all">新增模块</legend> 
 		<input type='hidden' id='M_ParentID' name="M_ParentID" value='${myModule.m_ParentID}' />		
-		<input type="hidden" id="M_ApplicationID" name="M_ApplicationID" value='${myModule.m_ApplicationID}' /> 		
+		<input type="hidden" id="M_ApplicationID" name="M_ApplicationID" value='${myModule.m_ApplicationID}' />
 		
-		<label for="M_PageCode">模块组代码</label> 
+		<label for="M_PageCode">模块代码</label> 
 		<input type="text" id="M_PageCode" name="M_PageCode" class="text ui-widget-content ui-corner-all" /> 		
 
 		
-		<label for="M_CName">模块组名称</label> 
+		<label for="M_CName">模块名称</label> 
 		<input type="text" id="M_CName" name="M_CName" class="text ui-widget-content ui-corner-all" /> 		
 
 		
@@ -81,14 +81,8 @@
 
 		
 		<input type="hidden" id="M_Orderlevel" name="M_Orderlevel" /> 		
-
 		
-		<label for="M_Issystem">系统</label> 
-		<select name="M_Issystem" id="M_Issystem" class="text ui-widget-content ui-corner-all"> 
-			<option value=0>是</option> 
-			<option value=1>否</option> 
-		</select> 				
-
+		<input type="hidden" id="M_Issystem" name="M_Issystem" value="1" />
 		
 		<label for="M_Close">活动</label> 		
 		<select name="M_Close" id="M_Close" class="text ui-widget-content ui-corner-all"> 
@@ -98,8 +92,7 @@
 		
 		<label for="M_Icon">模块图标</label> 
 		<input type="text" id="M_Icon" name="M_Icon" class="text ui-widget-content ui-corner-all" /> 		
-			<@FormButton action="Update" title="提 交" />			
-			<@FormButton action="Cancel" title="取 消" />
+			<@FormButton action="Update" title="提 交" />	
 	</fieldset>	
 	
 </form>

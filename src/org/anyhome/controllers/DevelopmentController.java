@@ -123,8 +123,12 @@ public class DevelopmentController extends AdminController {
 	}
 	public FreeMarkerView CreateController(){
 		FreeMarkerView view = new FreeMarkerView();
-		String table = request.getParameter("tableName");
-		view.setAttribute("tables", table);
+		String tablename = request.getParameter("tableName");
+		String ControllerName = request.getParameter("ControllerName");
+		MyDevelopment myDevelopment= new MyDevelopment();
+		myDevelopment.setControllerName(ControllerName);
+		myDevelopment.setTablename(tablename);
+		view.setAttribute("myDevelopment", myDevelopment);
 		return view;		
 	}
 	

@@ -19,10 +19,13 @@ import com.et.ar.annotations.Column;
  *
  */
 public class MyDevelopment extends ActiveRecordBase {
-	@Column private String Tablename;
-	@Column private String DatabaseType;
-	@Column private String ColumName;
-	@Column private String ColumnType;
+	private String Tablename;
+	private String DatabaseType;
+	private String ColumName;
+	private String ColumnType;
+	private String ControllerName;
+	
+	
 	public void setDatabaseType(String databaseType) {
 		DatabaseType = databaseType;
 	}
@@ -46,6 +49,12 @@ public class MyDevelopment extends ActiveRecordBase {
 	}
 	public String getColumnType() {
 		return ColumnType;
+	}
+	public void setControllerName(String controllerName) {
+		ControllerName = controllerName;
+	}
+	public String getControllerName() {
+		return ControllerName;
 	}
 
 }

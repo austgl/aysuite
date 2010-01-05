@@ -14,7 +14,6 @@
 
 <script type="text/javascript" src="${jspath?html}views/js/jquery-1.3.2.js"></script>	
 <script type="text/javascript" src="${jspath?html}views/js/jquery-ui-1.7.2.js"></script>
-<script type="text/javascript" src="${jspath?html}views/js/jquery.bgiframe.js"></script>
 <script type="text/javascript" src="${jspath?html}views/js/jquery.desktop.js"></script>
 <script type="text/javascript" src="${jspath?html}views/js/ui.formValidator_min.js"></script>
 <script type="text/javascript" src="${jspath?html}views/js/jquery.form.js"></script>
@@ -22,6 +21,7 @@
 <script type="text/javascript" src="${jspath?html}views/js/jquery.jgrowl.js"></script>
 <script type="text/javascript" src="${jspath?html}views/js/ui.ariaSorTable.js"></script>
 <script type="text/javascript" src="${jspath?html}views/js/xheditor.js"></script>
+<script type="text/javascript" src="${jspath?html}views/js/jquery.blockUI.js"></script>
 
 
 
@@ -176,7 +176,7 @@
 </div>
 <!----
 <script type="text/javascript" src="http://jqueryui.com/themeroller/themeswitchertool/"></script>
---->	
+--->
 <script>
 JQD.init_desktop();
 $(function() {		

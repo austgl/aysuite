@@ -57,7 +57,7 @@ $(function() {
 	$('#selectable').selectable({
 		selected:function(event, ui){
 			var id = $(this).find('li.ui-selected').attr('id');
-			$('.window_main#${Helpers.controller}').load('${Helpers.uri}/Details/'+id);
+			$('.window_main#${Helpers.controller}').load('${Helpers.uri}/Details/'+id);			
 		}
 	});
 

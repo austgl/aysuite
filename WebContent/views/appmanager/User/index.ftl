@@ -1,10 +1,11 @@
 <#include "/common/control.ftl">
 <div class="window_aside" id="${Helpers.controller}">
-<@ImgQButton id="refresh" action="Add" title="刷新本页" class="refresh"/>
-<@ImgQButton id="Add" action="Add" title="新增" class="plusthick"/>
+<@ImgQButton id="refresh" action="refresh" title="刷新本页" auth=false />
+<@ImgQButton action="Create" title="新增用户" />
 <br />
 <br />
 	<ol id="selectable">
+		<li id="0" class="ui-widget-content">所有用户</li>	
 	<#list myGroup as item>
 		<li id="${item.groupID}" class="ui-widget-content">${item.g_CName}</li>	
 	</#list>
@@ -20,7 +21,7 @@
 	</#list>
 	</ul>
 </div>
-
+<input type='hidden' id='${Helpers.controller}thisuri' value='${Helpers.uri}'>
 <div id="${Helpers.controller}edit" title="">
 
 </div>
@@ -50,10 +51,19 @@ $(function() {
 	$('#selectable').selectable({
 		selected:function(event, ui){
 			var id = $(this).find('li.ui-selected').attr('id');
-			$('.window_main#${Helpers.controller}').load('${Helpers.uri}/UserByGroup/'+id);
+			var url="${Helpers.uri}/UserByGroup/"+id;
+			$('.window_main#${Helpers.controller}').load(url);
 		}
 	});
-	$('li[Userid]').click(function(){
+	$("a[action='${Helpers.controller}.Create']").click(function(){
+		var posturl = $(this).attr('href');		
+		if (posturl!=""){
+			$('div#${Helpers.controller}.window_main').load(posturl);
+			return false;
+			//posturl='${Helpers.uri}/Details/'+userid;		
+		}		
+	});
+	$("li[Userid]").click(function(){
 		var userid= $(this).attr('Userid');
 		var userName = $(this).find('h5').html();
 		$UserEditD.attr('title',userName);

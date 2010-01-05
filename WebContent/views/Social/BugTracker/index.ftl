@@ -51,6 +51,8 @@
 		<input type="hidden" id="B_Userid" name="B_Userid" value='${MyUserTicket.userID}' /> 				
 		<input type="hidden" id="B_Url" name="B_Url" value='${Helpers.uri}' />
 		<input type="hidden" id="B_IsUpdate" name="B_IsUpdate" value='0' />
+		<input type="hidden" id="T_B_Dtime" name="T_B_Dtime" />
+		<input type="hidden" id="T_B_Updata" name="T_B_Updata" />
 		<input type="hidden" id="B_Module" name="B_Module" value='${Helpers.controller}' /> 	
 		<textarea name="B_BugContent" id="B_BugContent" rows="10" class="text ui-widget-content ui-corner-all"></textarea> 
 	<@ImgQButton id="SaveCreate" title="保存" auth=false icon="Create" />	

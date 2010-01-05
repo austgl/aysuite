@@ -37,10 +37,18 @@
 		});
 		$('#accordion>div').find('A').click(function(){
 			var tablename = $(this).html();
-			$('.window_main').find('#model').load('Development/CreateModel?tableName='+tablename).text();
-			$('.window_main').find('#View').load('Development/CreateViews?tableName='+tablename,{},function(){
-				$(this).html($(this).html());
+			$.get('Development/CreateModel?tableName='+tablename,function(data){
+				$('.window_main').find('#model').text(data);
+			});			
+			$.get('Development/CreateController?ControllerName='+tablename.replace("ay_",""),function(data){
+				$('.window_main').find('#Contrallor').text(data);
 			});
+			$.get('Development/CreateViews?tableName='+tablename,function(data){
+				$('.window_main').find('#View').text(data);
+			});			
+			//$('.window_main').find('#View').load('Development/CreateViews?tableName='+tablename,{},function(){
+				//$(this).html($(this).html());
+			//});
 			return false;
 		})
 		

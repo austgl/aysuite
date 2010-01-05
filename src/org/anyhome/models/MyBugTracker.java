@@ -75,6 +75,8 @@ public class MyBugTracker extends ActiveRecordBase {
 			} 
 			
 			public void setB_Dtime(java.sql.Date T_B_Dtime){
+				if (T_B_Dtime==null)
+					T_B_Dtime = new java.sql.Date(new java.util.Date().getTime());
 				B_Dtime=T_B_Dtime;
 			}
 			public java.sql.Date getB_Dtime() {
@@ -88,6 +90,8 @@ public class MyBugTracker extends ActiveRecordBase {
 				return B_IsUpdate;
 			} 
 			public void setB_Updata(java.sql.Date T_B_Updata){
+				if (T_B_Updata==null)
+					T_B_Updata = new java.sql.Date(new java.util.Date().getTime());				
 				B_Updata=T_B_Updata;
 			}
 			public Date getB_Updata() {

@@ -11,9 +11,7 @@
  */
 package org.anyhome.controllers.AppManager;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import org.anyhome.controllers.AdminController;
 import org.anyhome.models.MyModule;
 
@@ -43,8 +41,21 @@ public class ModuleController extends AdminController {
 
 
 	public JsonView SaveCreate(MyModule myModule) throws ActiveRecordException{
-		if(myModule.save())
+		if(myModule.save()){
+			if (myModule.getM_ParentID()==0){
+				MyModule m = new MyModule();
+				m.setM_ApplicationID(myModule.getM_ApplicationID());
+				m.setM_Close(myModule.getM_Close());
+				m.setM_CName(myModule.getM_CName());
+				m.setM_Directory(myModule.getM_Directory());
+				m.setM_Icon(myModule.getM_Icon());
+				m.setM_IsSystem(myModule.getM_IsSystem());
+				m.setM_ParentID(myModule.getModuleID());
+				m.setM_PageCode(myModule.getM_PageCode()+"001");
+				m.save();
+			}			
 			return null;
+		}
 		//return ;
 		return new JsonView();
 		

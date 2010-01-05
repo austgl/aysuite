@@ -28,10 +28,10 @@
   <welcome-file>default.jsp</welcome-file>
  </welcome-file-list>
  <jsp-config>
-<taglib>
-	<taglib-uri>oscache</taglib-uri>
-	<taglib-location>/WEB-INF/classes/oscache.tld</taglib-location>
-</taglib> 
+  <taglib>
+   <taglib-uri>oscache</taglib-uri>
+   <taglib-location>/WEB-INF/classes/oscache.tld</taglib-location>
+  </taglib>
  </jsp-config>
  <login-config>
   <auth-method>BASIC</auth-method>

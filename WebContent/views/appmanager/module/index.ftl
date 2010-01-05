@@ -1,7 +1,8 @@
 <#include "/common/control.ftl">
 <div class="window_aside" id="${Helpers.controller}">
 
-<@ImgQButton id="refresh" action="refresh" title="刷新本页" auth=false  class="refresh"/>
+<@ImgQButton id="refresh" action="refresh" title="刷新本页" auth=false />
+<@ImgQButton action="Create" />
 <br />
 <br />
 <div id="${Helpers.controller}_accordion">
@@ -46,6 +47,12 @@ $(function() {
 				$('.window_main#${Helpers.controller}').load('${Helpers.uri}/ModuleList/'+id);
 			}
 		});
+	});
+	
+	$("A[action='${Helpers.controller}.Create']").click(function(){
+		var url=$(this).attr('href');
+		$('div.window_main#${Helpers.controller}').load(url);
+		return false;
 	});
 
 	$('#refresh').click(function(){
