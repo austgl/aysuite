@@ -54,6 +54,7 @@ public class BaseController extends Controller {
 		Helpers.setController(super.getControllerName());
 		Helpers.setUrl(super.request.getRequestURL().toString());
 		Helpers.setUri(super.request.getRequestURI());
+		Helpers.setActonId(super.request.getParameter("id"));
 		Helpers.setContextPath(super.request.getContextPath());
 		//---		
 		String ss = super.getControllerName().toLowerCase();
@@ -71,8 +72,9 @@ public class BaseController extends Controller {
 			}
 		}
 		super.getRequest().setAttribute("Helpers", Helpers);
+		super.getRequest().setAttribute("request", request);
 		return true;
-	}	
+	}
 	
 	protected Boolean Auth() throws Exception{
 		if (session.getAttribute("MyUserTicket") == null){

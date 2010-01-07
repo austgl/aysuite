@@ -68,51 +68,9 @@
 			</div>
 			<div class="abs window_content">
 				<div class="window_aside">
-					Hello. You look nice today!
+					
 				</div>
 				<div class="window_main">
-					<table class="data">
-						<tr>
-							<th class="shrink">
-								&nbsp;
-							</th>
-							<th>
-								Name
-							</th>
-							<th>
-								Date Modified
-							</th>
-							<th>
-								Date Created
-							</th>
-							<th>
-								Size
-							</th>
-							<th>
-								Kind
-							</th>
-						</tr>
-						<tr>
-							<td>
-								<img src="views/images/icons/icon_16_trash.png" />
-							</td>
-							<td>
-								Trash
-							</td>
-							<td>
-								Today
-							</td>
-							<td>
-								&mdash;
-							</td>
-							<td>
-								&mdash;
-							</td>
-							<td>
-								Bin
-							</td>
-						</tr>
-					</table>
 				</div>
 			</div>
 			<div class="abs window_bottom ui-state-active">

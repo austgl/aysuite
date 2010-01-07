@@ -18,6 +18,7 @@ import java.util.List;
  *
  */
 public class MyHelpers {
+	private String ActonId;
 	private String Url;
 	private String HostName;
 	private String Controller;
@@ -73,5 +74,11 @@ public class MyHelpers {
 	}
 	public List<String> getPermission() {
 		return Permission;
+	}
+	public void setActonId(String actonId) {
+		ActonId = actonId;
+	}
+	public String getActonId() {
+		return ActonId;
 	}
 }

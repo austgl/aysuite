@@ -47,6 +47,13 @@ public class Permission {
 		return popedomType;		
 	}
 	
+	/**
+	 * 根据用户ID和controller给出action
+	 * @param UserID
+	 * @param Directory
+	 * @return
+	 * @throws ActiveRecordException
+	 */
 	public static List<String> CheckAndPermiss(int UserID,String Directory) throws ActiveRecordException{
 		List<String> lst = new ArrayList<String>();
 		for (String s:PopedomType().keySet()){
@@ -61,7 +68,7 @@ public class Permission {
 	}
 	
 	/**
-	 * 
+	 * 根据用户ID controller 检查是否包含 权限值 CheckValue
 	 * @param UserID
 	 * @param appId
 	 * @param Directory
@@ -127,7 +134,7 @@ public class Permission {
 	}
 	
 	/**
-	 * 
+	 * 列出指定用户的所有 MyRolePermission
 	 * @param userId
 	 * @param Directory
 	 * @return
