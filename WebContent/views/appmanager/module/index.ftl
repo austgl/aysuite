@@ -1,7 +1,7 @@
 <#include "/common/control.ftl">
 <div class="window_aside" id="${Helpers.controller}">
 
-<@ImgQButton id="refresh" action="refresh" title="刷新本页" auth=false />
+<@ImgQButton id="refresh" action="refresh" title="刷新本页" auth=false icon="refresh"/>
 <@ImgQButton action="Create" />
 <br />
 <br />

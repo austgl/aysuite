@@ -24,6 +24,9 @@
 		</#list>	
 	</#if>
 <#else>
+<#if action="refresh">
+	<#assign icon="refresh">
+</#if>
 	<a id="${id}" action="${Helpers.controller}.${action}" href="${Helpers.uri}/${action}/${action}" title="${title}" class="submit ui-state-default ui-corner-all"><img src="views/css/icons/${icon}.png">${title}</a>	
 </#if>
 </#macro>
